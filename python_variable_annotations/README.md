@@ -1,6 +1,55 @@
 # Python - Variable Annotations
 
-h2>Resources</h2>
+ <div class="panel-heading">
+      <h2 class="panel-title">Concepts</h2>
+    </div>
+    <div class="panel-body">
+      <p>
+        <em>For this project, we expect you to look at this concept:</em>
+      </p>
+
+<h3 class="d-flex flex-column gap-2">
+  <span>Advanced Python</span>
+</h3>
+
+<div>
+  
+</div>
+
+<div class="gap formatted-content">
+    <p>Python is a dynamically-typed language. That means that variable types are dynamically set at run-time, upon assignment of a value to a variable.</p>
+
+<p>For example, in</p>
+
+<pre><code class="python">def fn(a, b):
+    return a + b
+</code></pre>
+
+<p>The types of <code>a</code> and <code>b</code> are not known at build-time, only when <code>a</code> and <code>b</code> are assigned values at run-time.</p>
+
+<p>Hence, calling</p>
+
+<pre><code class="python">fn(&quot;a&quot;, 1)
+</code></pre>
+
+<p>somewhere in your code will not raise an exception until the code is actually executed and the function is called:</p>
+
+<pre><code>&gt;&gt;&gt; fn(&quot;a&quot;, 1)
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+TypeError: can only concatenate str (not &quot;int&quot;) to str
+</code></pre>
+
+<p>In Python 3, type annotations do not change this. Python is still a dynamically-typed language. Type annotations serve the following purpose:</p>
+
+<ul>
+<li>Code documentation: thanks to them, a developer reading type-annotated code (his own or someone else&rsquo;s) will know exactly what type each variables is supposed to be. This helps reduce bugs and exceptions and accelerate the development cycle.</li>
+<li>Linting and validation: code editors and continuous integration (CI) pipelines can be configured to automatically validate type-annotated code at build-time and catch bugs before they make it to production.</li>
+</ul>
+
+</div>
+
+<h2>Resources</h2>
 
 <p><strong>Read or watch</strong>:</p>
 
@@ -43,3 +92,421 @@ h2>Resources</h2>
 
   </div>
 </div>
+
+<h2 class="gap">Tasks</h2>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      0. Basic annotations - add
+    </h3>
+
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+  <!-- Progress vs Score -->
+  <div class="task_progress_score_bar" data-task-id="21434" data-correction-id="707415">
+      <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+  <!-- Task Body -->
+  <p>Write a type-annotated function <code>add</code> that takes a float <code>a</code> and a float <code>b</code> as arguments and returns their sum as a float. </p>
+
+<pre><code>bob@dylan:~$ cat 0-main.py
+#!/usr/bin/env python3
+add = __import__(&#39;0-add&#39;).add
+
+print(add(1.11, 2.22) == 1.11 + 2.22)
+print(add.__annotations__)
+
+bob@dylan:~$ ./0-main.py
+True
+{&#39;a&#39;:  &lt;class &#39;float&#39;&gt;, &#39;b&#39;: &lt;class &#39;float&#39;&gt;, &#39;return&#39;: &lt;class &#39;float&#39;&gt;}
+</code></pre>
+
+  </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      1. Basic annotations - concat
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+   <!-- Progress vs Score -->
+   <div class="task_progress_score_bar" data-task-id="21435" data-correction-id="707415">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+  <!-- Task Body -->
+   <p>Write a type-annotated function <code>concat</code> that takes a string <code>str1</code> and a string <code>str2</code> as arguments and returns a concatenated string</p>
+
+<pre><code>bob@dylan:~$ cat 1-main.py
+#!/usr/bin/env python3
+concat = __import__(&#39;1-concat&#39;).concat
+
+str1 = &quot;egg&quot;
+str2 = &quot;shell&quot;
+
+print(concat(str1, str2) == &quot;{}{}&quot;.format(str1, str2))
+print(concat.__annotations__)
+
+bob@dylan:~$ ./1-main.py
+True
+{&#39;str1&#39;: &lt;class &#39;str&#39;&gt;, &#39;str2&#39;: &lt;class &#39;str&#39;&gt;, &#39;return&#39;: &lt;class &#39;str&#39;&gt;}
+</code></pre>
+
+  </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      2. Basic annotations - floor
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+   <!-- Progress vs Score -->
+   <div class="task_progress_score_bar" data-task-id="21436" data-correction-id="707415">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+  <!-- Task Body -->
+  <p>Write a type-annotated function <code>floor</code> which takes a float <code>n</code> as argument and returns the floor of the float.</p>
+
+<pre><code>bob@dylan:~$ cat 2-main.py
+#!/usr/bin/env python3
+
+import math
+
+floor = __import__(&#39;2-floor&#39;).floor
+
+ans = floor(3.14)
+
+print(ans == math.floor(3.14))
+print(floor.__annotations__)
+print(&quot;floor(3.14) returns {}, which is a {}&quot;.format(ans, type(ans)))
+
+bob@dylan:~$ ./2-main.py
+True
+{&#39;n&#39;: &lt;class &#39;float&#39;&gt;, &#39;return&#39;: &lt;class &#39;int&#39;&gt;}
+floor(3.14) returns 3, which is a &lt;class &#39;int&#39;&gt;
+</code></pre>
+
+  </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      3. Basic annotations - to string
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+   <!-- Progress vs Score -->
+   <div class="task_progress_score_bar" data-task-id="21437" data-correction-id="707415">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+  <!-- Task Body -->
+  <p>Write a type-annotated function <code>to_str</code> that takes a float <code>n</code> as argument and returns the string representation of the float.</p>
+
+<pre><code>bob@dylan:~$ cat 3-main.py
+#!/usr/bin/env python3
+to_str = __import__(&#39;3-to_str&#39;).to_str
+
+pi_str = to_str(3.14)
+print(pi_str == str(3.14))
+print(to_str.__annotations__)
+print(&quot;to_str(3.14) returns {} which is a {}&quot;.format(pi_str, type(pi_str)))
+
+bob@dylan:~$ ./3-main.py
+True
+{&#39;n&#39;: &lt;class &#39;float&#39;&gt;, &#39;return&#39;: &lt;class &#39;str&#39;&gt;}
+to_str(3.14) returns 3.14, which is a &lt;class &#39;str&#39;&gt;
+</code></pre>
+
+  </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      4. Define variables
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+  <!-- Progress vs Score -->
+  <div class="task_progress_score_bar" data-task-id="21438" data-correction-id="707415">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+  <!-- Task Body -->
+  <p>Define and annotate the following variables with the specified values:</p>
+
+<ul>
+<li><code>a</code>, an integer with a value of 1</li>
+<li><code>pi</code>, a float with a value of 3.14</li>
+<li><code>i_understand_annotations</code>, a boolean with a value of True</li>
+<li><code>school</code>, a string with a value of &ldquo;Holberton&rdquo;</li>
+</ul>
+
+<pre><code>bob@dylan:~$ cat 4-main.py
+#!/usr/bin/env python3
+
+a = __import__(&#39;4-define_variables&#39;).a
+pi = __import__(&#39;4-define_variables&#39;).pi
+i_understand_annotations = __import__(&#39;4-define_variables&#39;).i_understand_annotations
+school = __import__(&#39;4-define_variables&#39;).school
+
+print(&quot;a is a {} with a value of {}&quot;.format(type(a), a))
+print(&quot;pi is a {} with a value of {}&quot;.format(type(pi), pi))
+print(&quot;i_understand_annotations is a {} with a value of {}&quot;.format(type(i_understand_annotations), i_understand_annotations))
+print(&quot;school is a {} with a value of {}&quot;.format(type(school), school))
+
+bob@dylan:~$ ./4-main.py
+a is a &lt;class &#39;int&#39;&gt; with a value of 1
+pi is a &lt;class &#39;float&#39;&gt; with a value of 3.14
+i_understand_annotations is a &lt;class &#39;bool&#39;&gt; with a value of True
+school is a &lt;class &#39;str&#39;&gt; with a value of Holberton
+</code></pre>
+
+  </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      5. Complex types - list of floats
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+  <!-- Progress vs Score -->
+  <div class="task_progress_score_bar" data-task-id="21439" data-correction-id="707415">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+  <!-- Task Body -->
+  <p>Write a type-annotated function <code>sum_list</code> which takes a list <code>input_list</code> of floats as argument and returns their sum as a float.</p>
+
+<pre><code>bob@dylan:~$ cat 5-main.py
+#!/usr/bin/env python3
+
+sum_list = __import__(&#39;5-sum_list&#39;).sum_list
+
+floats = [3.14, 1.11, 2.22]
+floats_sum = sum_list(floats)
+print(floats_sum == sum(floats))
+print(sum_list.__annotations__)
+print(&quot;sum_list(floats) returns {} which is a {}&quot;.format(floats_sum, type(floats_sum)))
+
+bob@dylan:~$ ./5-main.py
+True
+{&#39;input_list&#39;: typing.List[float], &#39;return&#39;: &lt;class &#39;float&#39;&gt;}
+sum_list(floats) returns 6.470000000000001 which is a &lt;class &#39;float&#39;&gt;
+</code></pre>
+
+  </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      6. Complex types - mixed list
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+  <!-- Progress vs Score -->
+   <div class="task_progress_score_bar" data-task-id="21440" data-correction-id="707415">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+  <!-- Task Body -->
+  <p>Write a type-annotated function <code>sum_mixed_list</code> which takes a list <code>mxd_lst</code> of integers and floats and returns their sum as a float.</p>
+
+<pre><code>bob@dylan:~$ cat 6-main.py
+#!/usr/bin/env python3
+
+sum_mixed_list = __import__(&#39;6-sum_mixed_list&#39;).sum_mixed_list
+
+print(sum_mixed_list.__annotations__)
+mixed = [5, 4, 3.14, 666, 0.99]
+ans = sum_mixed_list(mixed)
+print(ans == sum(mixed))
+print(&quot;sum_mixed_list(mixed) returns {} which is a {}&quot;.format(ans, type(ans)))
+
+bob@dylan:~$ ./6-main.py
+{&#39;mxd_lst&#39;: typing.List[typing.Union[int, float]], &#39;return&#39;: &lt;class &#39;float&#39;&gt;}
+True
+sum_mixed_list(mixed) returns 679.13 which is a &lt;class &#39;float&#39;&gt;
+</code></pre>
+
+  </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      7. Complex types - string and int/float to tuple
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+  <!-- Progress vs Score -->
+   <div class="task_progress_score_bar" data-task-id="21441" data-correction-id="707415">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+  <!-- Task Body -->
+   <p>Write a type-annotated function <code>to_kv</code> that takes a string <code>k</code> and an int OR float <code>v</code> as arguments and returns a tuple. The first element of the tuple is the string <code>k</code>. The second element is the square of the int/float <code>v</code> and should be annotated as a float.</p>
+
+<pre><code>bob@dylan:~$ cat 7-main.py
+#!/usr/bin/env python3
+
+to_kv = __import__(&#39;7-to_kv&#39;).to_kv
+
+print(to_kv.__annotations__)
+print(to_kv(&quot;eggs&quot;, 3))
+print(to_kv(&quot;school&quot;, 0.02))
+
+bob@dylan:~$ ./7-main.py
+{&#39;k&#39;: &lt;class &#39;str&#39;&gt;, &#39;v&#39;: typing.Union[int, float], &#39;return&#39;: typing.Tuple[str, float]}
+(&#39;eggs&#39;, 9)
+(&#39;school&#39;, 0.0004)
+</code></pre>
+
+  </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      8. Complex types - functions
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+  <!-- Progress vs Score -->
+   <div class="task_progress_score_bar" data-task-id="21442" data-correction-id="707415">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+  <!-- Task Body -->
+  <p>Write a type-annotated function <code>make_multiplier</code> that takes a float <code>multiplier</code> as argument and returns a function that multiplies a float by <code>multiplier</code>.</p>
+
+<pre><code>bob@dylan:~$ cat 8-main.py
+#!/usr/bin/env python3
+
+make_multiplier = __import__(&#39;8-make_multiplier&#39;).make_multiplier
+print(make_multiplier.__annotations__)
+fun = make_multiplier(2.22)
+print(&quot;{}&quot;.format(fun(2.22)))
+
+bob@dylan:~$ ./8-main.py
+{&#39;multiplier&#39;: &lt;class &#39;float&#39;&gt;, &#39;return&#39;: typing.Callable[[float], float]}
+4.928400000000001
+</code></pre>
+
+  </div>
+
+ <div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      9. Let&#39;s duck type an iterable object
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+  <!-- Progress vs Score -->
+  <div class="task_progress_score_bar" data-task-id="21443" data-correction-id="707415">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+  <!-- Task Body -->
+  <p>Annotate the below function&rsquo;s parameters and return values with the appropriate types</p>
+
+<pre><code>def element_length(lst):
+    return [(i, len(i)) for i in lst]
+</code></pre>
+
+<pre><code>bob@dylan:~$ cat 9-main.py 
+#!/usr/bin/env python3
+
+element_length =  __import__(&#39;9-element_length&#39;).element_length
+
+print(element_length.__annotations__)
+
+bob@dylan:~$ ./9-main.py 
+{&#39;lst&#39;: typing.Iterable[typing.Sequence], &#39;return&#39;: typing.List[typing.Tuple[typing.Sequence, int]]}
+</code></pre>
+
+  </div>
