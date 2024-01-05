@@ -36,6 +36,7 @@
 <li>All your functions should have a documentation (<code>python3 -c &#39;print(__import__(&quot;my_module&quot;).my_function.__doc__)&#39;</code></li>
 <li>A documentation is not a simple word, it&rsquo;s a real sentence explaining what&rsquo;s the purpose of the module, class or method (the length of it will be verified)</li>
 <li>All your functions and coroutines must be type-annotated.</li>
+<li>Execute your files wiht  "#python3 ./filename.py"</li>
 </ul>
 
   </div>
