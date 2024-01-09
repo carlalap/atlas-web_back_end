@@ -37,7 +37,7 @@
 
 <h2>Setup: <code>Popular_Baby_Names.csv</code></h2>
 
-<p><a href="/rltoken/7IKLZ7i4pO4MJ9CQoGHfVw" title="use this data file" target="_blank">use this data file</a> for your project</p>
+<p><a href=Popular_Baby_Names.csv title="use this data file" target="_blank">use this data file</a> for your project</p>
 
   </div>
 </div>
