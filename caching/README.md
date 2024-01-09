@@ -26,11 +26,11 @@
 
 <ul>
 <li>What a caching system is</li>
-<li>What FIFO means </li>
-<li>What LIFO means</li>
-<li>What LRU means</li>
-<li>What MRU means</li>
-<li>What LFU means</li>
+<li>What FIFO means ("First In, First Out.")</li>
+<li>What LIFO means ("Last In, First Out.")</li>
+<li>What LRU means ("Least Recently Used.")</li>
+<li>What MRU means ("Most Recently Used." ) </li>
+<li>What LFU means ("Least Frequently Used.")</li>
 <li>What the purpose of a caching system</li>
 <li>What limits a caching system have</li>
 </ul>
