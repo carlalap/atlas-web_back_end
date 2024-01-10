@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""task1. Simple pagination"""
+"""task2. Simple pagination"""
 import csv
 import math
 from typing import List
@@ -39,11 +39,11 @@ class Server:
         """Retrieves a specified page of data from the dataset.
         It uses the index_range function to calculate
         the start and end indices for the desired page."""
+
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
 
         start, end = index_range(page, page_size)
-
         pages = []
 
         if start >= len(self.dataset()):
@@ -53,3 +53,25 @@ class Server:
         pages = self.dataset()
 
         return pages[start:end]
+
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> dict:
+        """Get_Hyper return a dictionary containing information
+        about a specific page in the paginated dataset."""
+
+        assert isinstance(page, int) and page > 0
+        assert isinstance(page_size, int) and page_size > 0
+
+        data_page = self.get_page(page, page_size)
+        total_pages = len(self.dataset()) // page_size + 1
+
+        hyper_dict = {
+            'page_size': len(data_page),
+            'page': page,
+            'data': data_page,
+            'next_page': page + 1 if page * page_size <
+            len(self.dataset()) else None,
+            'prev_page': page - 1 if page > 1 else None,
+            'total_pages': total_pages
+        }
+
+        return hyper_dict
