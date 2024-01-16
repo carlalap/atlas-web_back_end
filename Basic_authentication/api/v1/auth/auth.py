@@ -4,7 +4,8 @@
 from flask import request
 from typing import List, TypeVar
 
-class Auth:
+
+class Auth():
     """Class to manage
     the API authentication."""
 
@@ -19,13 +20,14 @@ class Auth:
         if path in excluded_paths:
             return False
         return True
-    
+
     def authorization_header(self, request=None) -> str:
         """method that returns None - request
         will be the Flask request object
         """
         if request is None:
             return None
+
         if not request.headers.get('Authorization'):
             return None
         return request.headers.get('Authorization')
@@ -34,4 +36,4 @@ class Auth:
         """ that returns None - request
         will be the Flask request object
         """
-        return None
+        return request
