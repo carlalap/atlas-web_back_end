@@ -21,11 +21,11 @@ PII_FIELDS = (
 def filter_datum(fields: List[str], redaction: str, message: str,
                  separator: str) -> str:
     """Function that returns the log message obfuscated,
-    use a regex to replace occurrences of certain field values.
+    using a regex to replace occurrences of certain field values.
     """
-    for items in fields:
-        message = re.sub(items + "=.+?(?=abc)*\\" + ";", items + "="
-                         + redaction + separator, message)
+    for item in fields:
+        message = re.sub(f'{item}=.+?(?={separator})',
+                         f'{item}={redaction}{separator}', message)
     return message
 
 
