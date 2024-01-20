@@ -46,10 +46,9 @@ def before_request() -> str:
     ):
         abort(401)
 
-    if request.environ.get('current_user') is None:
+    if request.current_user is None:
         abort(403)
-
-    request.environ['current_user'] = auth.current_user(request)
+    request.current_user = auth.current_user(request)
 
 
 @app.errorhandler(401)
