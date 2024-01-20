@@ -40,8 +40,10 @@ def before_request() -> str:
     if not auth.require_auth(request.path, check_pathlist):
         return None
 
-    if not auth.authorization_header(request) and not\
-    auth.session_cookie(request):
+    if (
+        not auth.authorization_header(request) and
+        not auth.session_cookie(request)
+    ):
         abort(401)
 
     if request.environ.get('current_user') is None:
