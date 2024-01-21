@@ -3,7 +3,7 @@
 Route module for the API
 """
 from api.v1.views import app_views
-from flask import Flask, jsonify, abort, request, current_user
+from flask import Flask, jsonify, abort, request
 from flask_cors import (CORS, cross_origin)
 from os import getenv
 

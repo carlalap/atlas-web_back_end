@@ -3,7 +3,6 @@
 """
 from api.v1.views import app_views
 from flask import abort, jsonify, request
-from flask_login import current_user
 from models.user import User
 
 
