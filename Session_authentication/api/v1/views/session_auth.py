@@ -25,7 +25,6 @@ def auth_session_login() -> str:
     if not user[0].is_valid_password(password):
         return jsonify({"error": "wrong password"}), 401
 
-
     from api.v1.app import auth
     session_id = auth.create_session(user[0].id)
     user_data = user[0].to_json()
@@ -39,6 +38,7 @@ def auth_session_login() -> str:
     )
 
     return response
+
 
 @app_views.route('/auth_session/logout', methods=['DELETE'],
                  strict_slashes=False)
