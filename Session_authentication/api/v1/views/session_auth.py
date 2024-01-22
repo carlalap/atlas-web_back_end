@@ -37,3 +37,17 @@ def auth_session_login() -> str:
     )
 
     return response
+
+
+@app_views.route('/auth_session/logout', methods=['DELETE'],
+                 strict_slashes=False)
+def auth_session_logout() -> str:
+    """Method that delete all session authentication"""
+    from api.v1.app import auth
+
+    destroy = auth.destroy_session(request)
+
+    if not destroy:
+        abort(404)
+
+    return jsonify({}), 200
