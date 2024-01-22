@@ -3,10 +3,13 @@
 """
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 
-from user import Base, User
+from user import Base
+from user import User
 from typing import TypeVar
 
 
@@ -17,14 +20,21 @@ class DB:
     def __init__(self) -> None:
         """Initialize a new DB instance
         """
-        self._engine = create_engine("sqlite:///a.db", echo=True)
+        self._engine = create_engine("sqlite:///a.db", echo=False)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session = None
 
     @property
     def _session(self) -> Session:
-        """Memoized session object
+        """Add a new user to the database
+
+        Args:
+            email (str): User's email address
+            hashed_password (str): Hashed password for the user
+
+        Returns:
+            User: The created User object
         """
         if self.__session is None:
             DBSession = sessionmaker(bind=self._engine)
@@ -34,7 +44,7 @@ class DB:
     def add_user(self, email: str, hashed_password: str) -> TypeVar('User'):
         """Method that save a user to the DB and returns a User object
         """
-        user = User(email=email, hashed_password=hashed_password)
-        self._session.add(user)
+        new_user = User(email=email, hashed_password=hashed_password)
+        self._session.add(new_user)
         self._session.commit()
-        return user
+        return new_user
