@@ -4,36 +4,33 @@ routes for the Session authentication."""
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models.user import User
+from os import getenv
+
 
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
 def auth_session_login() -> str:
-    """Method that handle session authentication login"""
-    email = request.form.get('email')
-    password = request.form.get('password')
+    """Method that handle session authentication login
+    with the person email and password"""
+    email_per = request.form.get('email')
+    password_per = request.form.get('password')
 
-    if not email:
+    if not email_per:
         return jsonify({"error": "email missing"}), 400
 
-    if not password:
+    if not password_per:
         return jsonify({"error": "password missing"}), 400
 
-    user = User.search({'email': email})
-    if not user:
+    users = User.search({'email': email_per})
+    if not users:
         return jsonify({"error": "no user found for this email"}), 404
 
-    if not user[0].is_valid_password(password):
-        return jsonify({"error": "wrong password"}), 401
-
-    session_id = auth.create_session(user[0].id)
-    user_data = user[0].to_json()
-
-    response = jsonify(user_data)
-    response.set_cookie(
-        auth.SESSION_NAME,
-        session_id,
-        httponly=True,
-        secure=True if app_views.app.config['ENV'] == 'production' else False
-    )
-
-    return response
+    for user in users:
+        if user.is_valid_password(password_per):
+             from api.v1.app import auth
+             session_id = auth.create_session(user.id)
+             user_json = jsonify(user.to_json())
+             user_json.set_cookie(getenv('SESSION_NAME'), session_id)
+             return user_json
+        else:
+            return jsonify({"error": "wrong password"}), 401
