@@ -2,6 +2,7 @@
 """ DocDocDocDocDocDoc
 """
 from flask import Blueprint
+from models.user import User
 
 app_views = Blueprint("app_views", __name__, url_prefix="/api/v1")
 
@@ -10,3 +11,5 @@ from api.v1.views.users import *
 from api.v1.views.session_auth import *
 
 User.load_from_file()
+from api.v1.views.session_auth import auth_session_login
+app_views.add_url_rule('/auth_session/login', view_func=auth_session_login, methods=['POST'])
