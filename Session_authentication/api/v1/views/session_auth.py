@@ -40,6 +40,8 @@ def auth_session_login() -> str:
 
     return response
 
+@app_views.route('/auth_session/logout', methods=['DELETE'],
+                 strict_slashes=False)
 def logout() -> str:
     """
     Task8
