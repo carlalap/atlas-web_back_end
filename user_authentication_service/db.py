@@ -18,7 +18,7 @@ class DB:
     """
 
     def __init__(self) -> None:
-        """Initialize a new DB instance
+        """Constructor - Initialize a new DB instance
         """
         self._engine = create_engine("sqlite:///a.db", echo=False)
         Base.metadata.drop_all(self._engine)
@@ -48,3 +48,21 @@ class DB:
         self._session.add(new_user)
         self._session.commit()
         return new_user
+
+    def find_user_by(self, **kwargs) -> User:
+        """Method that find a user in the dababase on input arguments
+         Args:
+            **kwargs: Arbitrary keyword arguments to filter the query
+        Returns:
+            User: The first user found matching the query
+        Raises:
+            NoResultFound: If no results are found
+            InvalidRequestError: If wrong query arguments are passed
+        """
+
+        if not kwargs:
+            raise InvalidRequestError
+        user = self._session.query(User).filter_by(**kwargs).first()
+        if user is None:
+            raise NoResultFound
+        return user
