@@ -4,6 +4,7 @@ routes for the Session authentication."""
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models.user import User
+from api.v1.app import auth
 
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
@@ -43,7 +44,6 @@ def auth_session_login() -> str:
                  strict_slashes=False)
 def auth_session_logout() -> str:
     """Method that delete all session authentication"""
-    from api.v1.app import auth
 
     destroy = auth.destroy_session(request)
 
