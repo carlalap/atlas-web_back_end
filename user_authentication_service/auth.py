@@ -76,5 +76,5 @@ class Auth:
         if user_id:
             try:
                 self._db.find_user_by(user_id, session_id=None)
-            except ValueError:
-                pass
+            except NoResultFound:
+                None
