@@ -2,8 +2,8 @@
 """ handles all routes for the views for Session authentication """
 from flask import abort, jsonify, request
 from models.user import User
-from api.v1.app import auth
 from api.v1.views import app_views
+
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
 def auth_session_login() -> str:
