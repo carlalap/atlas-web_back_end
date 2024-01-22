@@ -2,7 +2,7 @@
 """Flask view that handles all
 routes for the Session authentication."""
 from api.v1.views import app_views
-from flask import abort, jsonify, request
+from flask import jsonify, request
 from models.user import User
 from os import getenv
 
@@ -26,8 +26,8 @@ def login() -> str:
         if user.is_valid_password(password_per):
             from api.v1.app import auth
             session_id = auth.create_session(user.id)
-            user_json = jsonify(user.to_json())
-            user_json.set_cookie(getenv('SESSION_NAME'), session_id)
-            return user_json
+            users_json = jsonify(user.to_json())
+            users_json.set_cookie(getenv('SESSION_NAME'), session_id)
+            return users_json
         else:
             return jsonify({"error": "wrong password"}), 401
