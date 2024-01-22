@@ -1,33 +1,36 @@
-#!/usr/bin/env python3
-"""Flask view that handles all
-routes for the Session authentication."""
-from api.v1.views import app_views
-from flask import jsonify, request
+from flask import abort, jsonify, request
 from models.user import User
-from os import getenv
-
+from api.v1.app import auth
+from api.v1.views import app_views
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
-def login() -> str:
-    """Method that handle session authentication login
-    with the person email and password"""
-    email_per = request.form.get('email')
-    if not email_per:
+def auth_session_login() -> str:
+    """ Handle Session authentication login """
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    if not email:
         return jsonify({"error": "email missing"}), 400
-    password_per = request.form.get('password')
-    if not password_per:
+
+    if not password:
         return jsonify({"error": "password missing"}), 400
 
-    users = User.search({'email': email_per})
-    if not users:
+    user = User.search({'email': email})
+    if not user:
         return jsonify({"error": "no user found for this email"}), 404
 
-    for user in users:
-        if user.is_valid_password(password_per):
-            from api.v1.app import auth
-            session_id = auth.create_session(user.id)
-            users_json = jsonify(user.to_json())
-            users_json.set_cookie(getenv('SESSION_NAME'), session_id)
-            return users_json
-        else:
-            return jsonify({"error": "wrong password"}), 401
+    if not user[0].is_valid_password(password):
+        return jsonify({"error": "wrong password"}), 401
+
+    session_id = auth.create_session(user[0].id)
+    user_data = user[0].to_json()
+
+    response = jsonify(user_data)
+    response.set_cookie(
+        auth.SESSION_NAME,
+        session_id,
+        httponly=True,
+        secure=True if app_views.app.config['ENV'] == 'production' else False
+    )
+
+    return response
