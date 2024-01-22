@@ -36,3 +36,14 @@ def auth_session_login() -> str:
     )
 
     return response
+
+def logout() -> str:
+    """
+    Task8
+    """
+    from api.v1.app import auth
+    destroy_session = auth.destroy_session(request)
+    if destroy_session is False:
+        abort(404)
+    else:
+        return jsonify({}), 200
