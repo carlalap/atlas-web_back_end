@@ -53,9 +53,14 @@ def logout():
     user = AUTH.get_user_from_session_id(session_id)
     if user is None:
         return jsonify({"error": "Invalid session ID"}), 403
-
+    
     AUTH.destroy_session(user)
-    return redirect(url_for('/home'))
+
+    # Manually set the 'Location' header for redirection
+    response = make_response('')
+    response.headers['Location'] = url_for('home')
+    response.status_code = 302
+    return response
 
 
 @app.route('/profile', methods=['GET'])
