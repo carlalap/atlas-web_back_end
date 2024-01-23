@@ -51,11 +51,11 @@ def logout():
         ID as a cookie with key "session_id"""
     session_id = request.cookies.get("session_id")
     user = AUTH.get_user_from_session_id(session_id)
-    if user:
-        AUTH.destroy_session(user)
-        return redirect(url_for('hello_app'))
-    else:
-        abort(403)
+    if user is None:
+        return jsonify({"error": "Invalid session ID"}), 403
+
+    AUTH.destroy_session(user)
+    return redirect(url_for('/home'))
 
 
 @app.route('/profile', methods=['GET'])
