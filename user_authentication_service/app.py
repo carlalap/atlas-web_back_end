@@ -2,7 +2,7 @@
 """Flask app
 with a single GET route ("/") that returns
 a JSON payload using flask.jsonify:"""
-from flask import Flask, jsonify, request, abort, url_for, make_response
+from flask import Flask, jsonify, request, abort, redirect, url_for
 from auth import Auth
 app = Flask(__name__)
 
@@ -55,12 +55,7 @@ def logout():
         return jsonify({"error": "Invalid session ID"}), 403
 
     AUTH.destroy_session(user)
-
-    # Manually set the 'Location' header for redirection
-    response = make_response('')
-    response.headers['Location'] = url_for('home')
-    response.status_code = 302
-    return response
+    return redirect(url_for('home'))
 
 
 @app.route('/profile', methods=['GET'])
