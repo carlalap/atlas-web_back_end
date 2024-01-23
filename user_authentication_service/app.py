@@ -44,18 +44,18 @@ def login():
     return response
 
 
-@app.route('/sessions', methods=['DELETE'])
+@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
 def logout():
     """function to respond to the DELETE /sessions route, Log Out!.
         request is expected to contain the session
         ID as a cookie with key "session_id"""
     session_id = request.cookies.get("session_id")
     user = AUTH.get_user_from_session_id(session_id)
-    if user is None:
-        return jsonify({"error": "Invalid session ID"}), 403
-
-    AUTH.destroy_session(user)
-    return redirect(url_for('home'))
+    if user:
+        AUTH.destroy_session(user)
+        return redirect(url_for('hello_app'))
+    else:
+        abort(403)
 
 
 @app.route('/profile', methods=['GET'])
