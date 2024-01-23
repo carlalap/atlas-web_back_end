@@ -4,10 +4,10 @@ with a single GET route ("/") that returns
 a JSON payload using flask.jsonify:"""
 from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
+app = Flask(__name__)
 
 
 AUTH = Auth()
-app = Flask(__name__)
 
 
 @app.route("/")
@@ -67,6 +67,19 @@ def profile() -> str:
             return jsonify({"email": user.email}), 200
 
     abort(403)
+
+
+@app.route('/reset_password', methods=['POST'])
+def get_reset_password_token() -> str:
+    """Method to respond to the resetpond to the POST /reset_password
+    """
+    try:
+        email = request.form.get('email')
+        if email:
+            token = AUTH.get_reset_password_token(email)
+            return jsonify({"email": email, "reset_token": token}), 200
+    except Exception:
+        abort(403)
 
 
 if __name__ == "__main__":
