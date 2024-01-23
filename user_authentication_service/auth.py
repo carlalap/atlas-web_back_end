@@ -67,8 +67,8 @@ class Auth:
             try:
                 user = self._db.find_user_by(session_id=session_id)
                 return user
-            except NoResultFound:
-                return None
+            except Exception:
+                return ValueError
 
     def destroy_session(self, user_id: int) -> None:
         """Method that update the corresponding
