@@ -55,7 +55,7 @@ def logout():
         return jsonify({"error": "Invalid session ID"}), 403
 
     AUTH.destroy_session(user)
-    return redirect(url_for('/'))
+    return redirect(url_for('home'))
 
 
 @app.route('/profile', methods=['GET'])
