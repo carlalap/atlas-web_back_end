@@ -41,20 +41,32 @@ def login():
     response = jsonify({"email": email, "message": "logged in"})
     response.set_cookie("session_id", session_id)
 
-    return response.
+    return response
 
 
-@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
+@app.route('/sessions', methods=['DELETE'])
 def logout():
     """function to respond to the DELETE /sessions route, Log Out!.
         request is expected to contain the session
         ID as a cookie with key "session_id"""
     session_id = request.cookies.get("session_id")
     user = AUTH.get_user_from_session_id(session_id)
-    if user is None or session_id is None:
+    if user is None:
         abort(403)
-    AUTH.destroy_session(user.id)
+    AUTH.destroy_session(user)
     return redirect("/")
+
+
+@app.route('/profile', methods=['GET'])
+def profile() -> str:
+    """function to respond to the GET /profile route."""
+    session_id = request.cookies.get('session_id')
+    if session_id:
+        user = AUTH.get_user_from_session_id(session_id)
+        if user:
+            return jsonify({"email": user.email}), 200
+
+    abort(403)
 
 
 if __name__ == "__main__":
