@@ -43,7 +43,7 @@ def get_locale():
         return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 # Set up Babel to work with the Flask application
-# - babel.init_app(app, locale_selector=get_locale) -
+# babel.init_app(app, locale_selector=get_locale)
 
 
 @app.route('/')
