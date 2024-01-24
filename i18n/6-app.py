@@ -28,18 +28,18 @@ app.config.from_object('6-app.Config')
 @babel.localeselector
 def get_locale():
     """Determine the best match with our supported languages."""
-    #1. Locale from URL parameters
+    # 1. Locale from URL parameters
     if request.args.get('locale'):
         user_locale = request.args.get('locale')
         if user_locale in app.config['LANGUAGES']:
             return user_locale
-        
+
         # 2. Locale from user settings
     elif g.user and g.user.get('locale')\
             and g.user['locale'] in app.config['LANGUAGES']:
         return g.user.get('locale')
     else:
-         # 3. Locale from request header
+        # 3. Locale from request header
         return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 # Set up Babel to work with the Flask application
