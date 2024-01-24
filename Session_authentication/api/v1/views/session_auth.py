@@ -8,20 +8,17 @@ from os import getenv
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
 def auth_session_login() -> str:
-    """ Handle Session authentication login """
+    """Method that handle all sessionS authentication login """
     email = request.form.get('email')
     password = request.form.get('password')
-
     if not email:
         return jsonify({"error": "email missing"}), 400
-
     if not password:
         return jsonify({"error": "password missing"}), 400
-
-    u = User()
-    if not u.search({'email': email}):
+    
+    if not User().search({'email': email}):
         return jsonify({"error": "no user found for this email"}), 404
-    user = u.search({'email': email})[0]
+    user = User().search({'email': email})[0]
     if not user.is_valid_password(password):
         return jsonify({"error": "wrong password"}), 401
     else:
