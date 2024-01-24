@@ -22,7 +22,7 @@ class Config():
     BABEL_DEFAULT_TIMEZONE = "UTC"
 
 
-app.config.from_object()
+app.config.from_object('5-app.Config')
 
 
 @babel.localeselector
