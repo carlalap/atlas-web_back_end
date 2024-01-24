@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, g
 from flask_babel import Babel
 
 app = Flask(__name__)
-babel = Babel()
+babel = Babel(app)
 
 
 users = {
@@ -48,7 +48,7 @@ def my_home():
 def get_user():
     """function that returns a user dictionary"""
     user = request.args.get('login_as')
-    if id:
+    if user:
         return users[int(user)]
     else:
         return None
