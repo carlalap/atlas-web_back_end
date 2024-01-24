@@ -24,10 +24,10 @@ class Config():
     BABEL_DEFAULT_TIMEZONE = "UTC"
 
 
-app.config.from_object('6-app.Config')
+app.config.from_object('7-app.Config')
 
 
-@babel.localeselector
+# @babel.localselector
 def get_locale():
     """Determine the best match with our supported languages."""
     # 1. Locale from URL parameters
@@ -44,14 +44,15 @@ def get_locale():
         # 3. Locale from request header
         return request.accept_languages.best_match(app.config['LANGUAGES'])
 
+
 # Set up Babel to work with the Flask application
-# babel.init_app(app, locale_selector=get_locale)
+babel.init_app(app, locale_selector=get_locale)
 
 
 @app.route('/')
 def my_home():
     """Method template that simply outputs a message"""
-    return render_template('./6-index.html')
+    return render_template('./7-index.html')
 
 
 def get_user():
@@ -71,7 +72,7 @@ def before_request():
     g.user = get_user()
 
 
-@babel.timezoneselector
+@babel.timezoneselect
 def get_timezone():
     """Function to get a timezone"""
     # 1. Timezone from URL parameters
@@ -92,6 +93,9 @@ def get_timezone():
             pass
     # 3. Default to UTC
     return 'UTC'
+
+
+# babel.init_app(app, locale_selector=get_locale)
 
 
 if __name__ == "__main__":
