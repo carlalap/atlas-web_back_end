@@ -42,11 +42,11 @@ class SessionAuth(Auth):
         the user session / logout:"""
         if request is None:
             return False
-        session_id = self.session_cookie(request)
-        if not session_id:
+        cookieid = self.session_cookie(request)
+        if not cookieid:
             return False
-        user_id = self.user_id_for_session_id(session_id)
+        user_id = self.user_id_for_session_id(cookieid)
         if not user_id:
             return False
-        del self.user_id_by_session_id[session_id]
+        del self.user_id_by_session_id[cookieid]
         return True
