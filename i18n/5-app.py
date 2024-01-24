@@ -11,7 +11,7 @@ users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
     2: {"name": "Beyonce", "locale": "en", "timezone": "US/Central"},
     3: {"name": "Spock", "locale": "kg", "timezone": "Vulcan"},
-    4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
+    42: {"name": "Teletubby", "locale": "fr", "timezone": "Europe/Paris"},
 }
 
 
@@ -36,7 +36,7 @@ def get_locale():
         return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 # Set up Babel to work with the Flask application
-# - babel.init_app(app, locale_selector=get_locale) -
+# babel.init_app(app, locale_selector=get_locale)
 
 
 @app.route('/')
