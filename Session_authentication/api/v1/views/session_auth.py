@@ -15,7 +15,6 @@ def auth_session_login() -> str:
         return jsonify({"error": "email missing"}), 400
     if not password:
         return jsonify({"error": "password missing"}), 400
-    
     if not User().search({'email': email}):
         return jsonify({"error": "no user found for this email"}), 404
     user = User().search({'email': email})[0]
@@ -33,7 +32,7 @@ def auth_session_login() -> str:
                  strict_slashes=False)
 def logout() -> str:
     """
-    Task8
+    Task8.  manage route DELETE /api/v1/auth_session/logout
     """
     from api.v1.app import auth
     destroy_session = auth.destroy_session(request)
