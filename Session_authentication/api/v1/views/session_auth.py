@@ -18,26 +18,18 @@ def auth_session_login() -> str:
     if not password:
         return jsonify({"error": "password missing"}), 400
 
-    user = User.search({'email': email})
-    if not user:
+    u = User()
+    if not u.search({'email': email}):
         return jsonify({"error": "no user found for this email"}), 404
-
-    if not user[0].is_valid_password(password):
+    user = u.search({'email': email})[0]
+    if not user.is_valid_password(password):
         return jsonify({"error": "wrong password"}), 401
-
-    from api.v1.app import auth
-    session_id = auth.create_session(user[0].id)
-    user_data = user[0].to_json()
-
-    response = jsonify(user_data)
-    response.set_cookie(
-        auth.SESSION_NAME,
-        session_id,
-        httponly=True,
-        secure=True if app_views.app.config['ENV'] == 'production' else False
-    )
-
-    return response
+    else:
+        from api.v1.app import auth
+        session_id = auth.create_session(user.id)
+        response = jsonify(user.to_json())
+        response.set_cookie(getenv('SESSION_NAME'), session_id)
+        return response
 
 
 @app_views.route('/auth_session/logout', methods=['DELETE'],
