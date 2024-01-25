@@ -56,9 +56,11 @@ def my_home():
 
 def get_user():
     """function that returns a user dictionary"""
-    user = request.args.get('login_as')
-    if user:
-        return users[int(user)]
+    if request.args.get('login_as'):
+        user_id = int(request.args.get('login_as'))
+        if user_id in users:
+            print(user_id)
+            return users.get(user_id)
     else:
         return None
 
