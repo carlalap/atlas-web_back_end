@@ -218,7 +218,9 @@ $ pybabel init -i messages.pot -d translations -l fr
 <p>Now you should be able to test different translations by visiting <code>http://127.0.0.1:5000?locale=[fr|en]</code>.</p>
 
 <p><strong>Visiting <code>http://127.0.0.1:5000/?locale=fr</code> should display this level 1 heading:</strong>
-<img src="https://s3.eu-west-3.amazonaws.com/hbtn.intranet/uploads/medias/2020/3/f958f4a1529b535027ce.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MYA5JM5DUTZGMZG%2F20240201%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240201T044137Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=510eb9e63568168e77914603d8fdfe8f82ade4ef4066b028c5e2b68dfaa8d62d" alt="" loading='lazy' style="" /></p>
+</p>
+
+<br><strong> Bonjour monde! </strong>
 
   </div>
 
@@ -278,10 +280,14 @@ $ pybabel init -i messages.pot -d translations -l fr
 </table>
 <p><strong>Visiting <code>http://127.0.0.1:5000/</code> in your browser should display this:</strong></p>
 
-![Alt Text](https://s3.eu-west-3.amazonaws.com/hbtn.intranet/uploads/medias/2020/3/2c5b2c8190f88c6b4668.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MYA5JM5DUTZGMZG%2F20240201%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240201T044137Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=c37a9cc1b4b153fa8f63f555db6ffafeffe55b30d639af81d034adbdb68e0b29)
+<br><strong> Hello world!</strong>
+<br> <strong>You are not logged in.</strong>
 
 <p><strong>Visiting <code>http://127.0.0.1:5000/?login_as=2</code> in your browser should display this:</strong>
-<img src="https://s3.eu-west-3.amazonaws.com/hbtn.intranet/uploads/medias/2020/3/277f24308c856a09908c.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MYA5JM5DUTZGMZG%2F20240201%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240201T044137Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=41a83c4ac1d805e783caf6ce5c5c92f35457d7770403946696213048d7923b4d" alt="" loading='lazy' style="" /></p>
+</p>
+
+<br> <strong>Hello world!</strong>
+<br> <strong>You are logged in as Beyonce.</strong>
 
   </div>
 
@@ -319,7 +325,9 @@ $ pybabel init -i messages.pot -d translations -l fr
 
 <p>Test by logging in as different users</p>
 
-<p><img src="https://s3.eu-west-3.amazonaws.com/hbtn.intranet/uploads/medias/2020/3/9941b480b0b9d87dc5de.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MYA5JM5DUTZGMZG%2F20240201%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240201T044137Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=381a353761b0265336df16bb5ce141d0774a1702c4b1c15a1ea763c1a1491d37" alt="" loading='lazy' style="" /></p>
+<br><strong> Bonjour monde!</strong>
+<br><strong> Vous êtes connecté en tant que Spock.</strong>
+
   </div>
 
 <div class="panel-heading panel-heading-actions">
