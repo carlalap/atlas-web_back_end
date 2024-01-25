@@ -25,7 +25,7 @@ class Config():
 app.config.from_object('5-app.Config')
 
 
-# @babel.localeselector
+@babel.localeselector
 def get_locale():
     """Determine the best match with our supported languages."""
     if request.args.get('locale'):
@@ -36,7 +36,7 @@ def get_locale():
         return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 # Set up Babel to work with the Flask application
-babel.init_app(app, locale_selector=get_locale)
+# babel.init_app(app, locale_selector=get_locale)
 
 
 @app.route('/')
@@ -47,11 +47,11 @@ def my_home():
 
 def get_user():
     """function that returns a user dictionary"""
-    if request.args.get('login_as')
-        user_id = request.args.get('login_as')
-    if user_id in users:
-        print(user_id)
-        return users.get(user_id)
+    if request.args.get('login_as'):
+        user_id = int(request.args.get('login_as'))
+        if user_id in users:
+            print(user)
+            return users.get(user_id)
     else:
         return None
 
