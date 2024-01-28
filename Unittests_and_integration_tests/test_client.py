@@ -24,7 +24,7 @@ class TestGithubOrgClient(unittest.TestCase):
         mock_get_json.assert_called_once
 
     def test_public_repos_ur(self):
-        """Method that unit-test GithubOrgClient._public_repos_url."""
+        """Method that unit-test GithubOrgClient._public_repos_url"""
         with patch.object(GithubOrgClient,
                           "org",
                           new_callable=PropertyMock) as patched:
