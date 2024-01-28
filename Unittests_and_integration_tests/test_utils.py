@@ -20,6 +20,6 @@ class TestAccessNestedMap(unittest.TestCase):
                          expected_result)
 
     @parameterized.expand([
-            ({}, ["a"]),
-            ({"a": 1}, ["a", "b"])
-        ])
+        ({}, ("a",), 'a'),
+        ({"a": 1}, ("a", "b"), 'b')
+    ])
