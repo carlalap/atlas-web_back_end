@@ -2,7 +2,7 @@
 """Unittests"""
 import unittest
 from unittest import mock
-from unitest.mock import patch
+from unittest.mock import patch
 from parameterized import parameterized
 from utils import access_nested_map, get_json
 
@@ -48,7 +48,7 @@ class TestGetJson(unittest.TestCase):
         mock_response = mock.Mock()
         mock_response.json.return_value = test_payload
 
-        with mock.patch('request.get',
+        with mock.patch('requests.get',
                    return_value=mock_response):
             result = get_json(test_url)
             self.assertEqual(result, test_payload)
