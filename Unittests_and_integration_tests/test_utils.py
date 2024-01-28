@@ -18,8 +18,3 @@ class TestAccessNestedMap(unittest.TestCase):
         """Method to test that the method returns what it is supposed to."""
         self.assertEqual(access_nested_map(nested_map, path),
                          expected_result)
-
-    @parameterized.expand([
-        ({}, ("a",), 'a'),
-        ({"a": 1}, ("a", "b"), 'b')
-    ])
