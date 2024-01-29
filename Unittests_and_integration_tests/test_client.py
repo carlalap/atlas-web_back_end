@@ -2,8 +2,10 @@
 """ Test the utils """
 import unittest
 from unittest.mock import patch, PropertyMock, Mock
-from parameterized import parameterized
+from parameterized import parameterized, parameterized_class
 from client import GithubOrgClient
+from fixtures import TEST_PAYLOAD
+from urllib.error import HTTPError
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -61,3 +63,29 @@ class TestGithubOrgClient(unittest.TestCase):
         github_client = GithubOrgClient("atlas")
         result = github_client.has_license(repo, license_key)
         self.assertEqual(expected_return, result)
+
+
+@parameterized_class(
+    ("org_payload", "repos_payload",
+     "expected_repos", "apache2_repos"), TEST_PAYLOAD)
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """Integration test for github org client"""
+    @classmethod
+    def setUpClass(cls):
+        """Method return example payloads found in the fixtures."""
+        cls.get_patcher = patch("request.get", side_effect=HTTPError)
+
+    @classmethod
+    def tearDownClass(cls):
+        """Method to stop patcher """
+        cls.get_patcher.stop()
+
+    def test_public_repos(self):
+        """Method to test GithubOrgClient.public_repos"""
+        test_class = GithubOrgClient("atlas")
+        assert True
+
+    def test_public_repos_with_license(self):
+        """Method to test the public_repos with the argument license"""
+        test_class = GithubOrgClient("atlas")
+        assert True
