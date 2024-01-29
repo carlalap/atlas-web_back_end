@@ -73,7 +73,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Method return example payloads found in the fixtures."""
-        cls.get_patcher = patch("request.get", side_effect=HTTPError)
+        cls.get_patcher = patch("requests.get", side_effect=HTTPError)
 
     @classmethod
     def tearDownClass(cls):
