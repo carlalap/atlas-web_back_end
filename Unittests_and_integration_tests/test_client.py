@@ -31,7 +31,7 @@ class TestGithubOrgClient(unittest.TestCase):
                          "repos_url": "https://www.atlasschool.com/"}
             patched.return_value = test_json
             github_client = GithubOrgClient(test_json.get("url"))
-            response = github_client._public_repos_url()
+            response = github_client._public_repos_url
             patched.assert_called_once()
             self.assertEqual(response, test_json.get("repos_url"))
 
@@ -48,3 +48,16 @@ class TestGithubOrgClient(unittest.TestCase):
             self.assertEqual(result, ["atlas", "abc"])
             get_patch.assert_called_once()
             mock_get.assert_called_once()
+
+    # inputs to parametrize the test
+    @parameterized.expand(
+        [
+            ({"license": {"key": "my_license"}}, "my_license", True),
+            ({"license": {"key": "other_license"}}, "my_license", False),
+        ]
+    )
+    def test_has_license(self, repo, license_key, expected_return):
+        """Method to unit-test GithubOrgClient.has_license"""
+        github_client = GithubOrgClient("atlas")
+        result = github_client.has_license(repo, license_key)
+        self.assertEqual(expected_return, result)
