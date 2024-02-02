@@ -36,3 +36,331 @@
 
   </div>
 </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      0. Basic Flask app
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+   <!-- Progress vs Score -->
+  <div class="task_progress_score_bar" data-task-id="21884" data-correction-id="707695">
+     <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+    <!-- Task Body -->
+    <p>First you will setup a basic Flask app in <code>0-app.py</code>. Create a single <code>/</code> route and an <code>index.html</code> template that simply outputs &ldquo;Welcome to Holberton&rdquo; as page title (<code>&lt;title&gt;</code>) and &ldquo;Hello world&rdquo; as header (<code>&lt;h1&gt;</code>).</p>
+
+  </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      1. Basic Babel setup
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+   <!-- Progress vs Score -->
+   <div class="task_progress_score_bar" data-task-id="21885" data-correction-id="707695">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+  <!-- Task Body -->
+  <p>Install the Babel Flask extension:</p>
+
+<pre><code>$ pip3 install flask_babel
+</code></pre>
+
+<p>Then instantiate the <code>Babel</code> object in your app. Store it in a module-level variable named <code>babel</code>.</p>
+
+<p>In order to configure available languages in our app, you will create a <code>Config</code> class that has a <code>LANGUAGES</code> class attribute equal to <code>[&quot;en&quot;, &quot;fr&quot;]</code>.</p>
+
+<p>Use <code>Config</code> to set Babel&rsquo;s default locale (<code>&quot;en&quot;</code>) and timezone (<code>&quot;UTC&quot;</code>).</p>
+
+<p>Use that class as config for your Flask app.</p>
+
+  </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      2. Get locale from request
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+  <!-- Progress vs Score -->
+   <div class="task_progress_score_bar" data-task-id="21886" data-correction-id="707695">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+    <!-- Task Body -->
+    <p>Create a <code>get_locale</code> function with the <code>babel.localeselector</code> decorator. Use <code>request.accept_languages</code> to determine the best match with our supported languages.</p>
+
+  </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      3. Parametrize templates
+    </h3>
+</div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+   <!-- Progress vs Score -->
+   <div class="task_progress_score_bar" data-task-id="21887" data-correction-id="707695">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+  <!-- Task Body -->
+   <p>Use the <code>_</code> or <code>gettext</code> function to parametrize your templates. Use the message IDs <code>home_title</code> and <code>home_header</code>.</p>
+
+<p>Create a <code>babel.cfg</code> file containing</p>
+
+<pre><code>[python: **.py]
+[jinja2: **/templates/**.html]
+extensions=jinja2.ext.autoescape,jinja2.ext.with_
+</code></pre>
+
+<p>Then initialize your translations with</p>
+
+<pre><code>$ pybabel extract -F babel.cfg -o messages.pot .
+</code></pre>
+
+<p>and your two dictionaries with </p>
+
+<pre><code>$ pybabel init -i messages.pot -d translations -l en
+$ pybabel init -i messages.pot -d translations -l fr
+</code></pre>
+
+<p>Then edit files <code>translations/[en|fr]/LC_MESSAGES/messages.po</code> to provide the correct value for each message ID for each language. Use the following translations:</p>
+<table class="hbtn-table"><tr>
+<th>msgid</th>
+<th>English</th>
+<th>French</th>
+</tr>
+<tr>
+<td><code>home_title</code></td>
+<td><code>&quot;Welcome to Holberton&quot;</code></td>
+<td><code>&quot;Bienvenue chez Holberton&quot;</code></td>
+</tr>
+<tr>
+<td><code>home_header</code></td>
+<td><code>&quot;Hello world!&quot;</code></td>
+<td><code>&quot;Bonjour monde!&quot;</code></td>
+</tr>
+</table>
+<p>Then compile your dictionaries with</p>
+
+<pre><code>$ pybabel compile -d translations
+</code></pre>
+
+<p>Reload the home page of your app and make sure that the correct messages show up.</p>
+
+  </div>
+
+ <div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      4. Force locale with URL parameter
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+   <!-- Progress vs Score -->
+   <div class="task_progress_score_bar" data-task-id="21888" data-correction-id="707695">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+   <!-- Task Body -->
+   <p>In this task, you will implement a way to force a particular locale by passing the <code>locale=fr</code> parameter to your app&rsquo;s URLs.</p>
+
+<p>In your <code>get_locale</code> function, detect if the incoming request contains <code>locale</code> argument and ifs value is a supported locale, return it. If not or if the parameter is not present, resort to the previous default behavior.</p>
+
+<p>Now you should be able to test different translations by visiting <code>http://127.0.0.1:5000?locale=[fr|en]</code>.</p>
+
+<p><strong>Visiting <code>http://127.0.0.1:5000/?locale=fr</code> should display this level 1 heading:</strong>
+</p>
+
+<br><strong> Bonjour monde! </strong>
+
+  </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      5. Mock logging in
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+   <!-- Progress vs Score -->
+   <div class="task_progress_score_bar" data-task-id="21889" data-correction-id="707695">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+  <!-- Task Body -->
+  <p>Creating a user login system is outside the scope of this project. To emulate a similar behavior, copy the following user table in <code>5-app.py</code>.</p>
+
+<pre><code>users = {
+    1: {&quot;name&quot;: &quot;Balou&quot;, &quot;locale&quot;: &quot;fr&quot;, &quot;timezone&quot;: &quot;Europe/Paris&quot;},
+    2: {&quot;name&quot;: &quot;Beyonce&quot;, &quot;locale&quot;: &quot;en&quot;, &quot;timezone&quot;: &quot;US/Central&quot;},
+    3: {&quot;name&quot;: &quot;Spock&quot;, &quot;locale&quot;: &quot;kg&quot;, &quot;timezone&quot;: &quot;Vulcan&quot;},
+    4: {&quot;name&quot;: &quot;Teletubby&quot;, &quot;locale&quot;: None, &quot;timezone&quot;: &quot;Europe/London&quot;},
+}
+</code></pre>
+
+<p>This will mock a database user table. Logging in will be mocked by passing <code>login_as</code> URL parameter containing the user ID to log in as.</p>
+
+<p>Define a <code>get_user</code>  function that returns a user dictionary or <code>None</code> if the ID cannot be found or if <code>login_as</code> was not passed.</p>
+
+<p>Define a <code>before_request</code> function and use the <code>app.before_request</code> decorator to make it be executed before all other functions. <code>before_request</code> should use <code>get_user</code> to find a user if any, and set it as a global on <code>flask.g.user</code>.</p>
+
+<p>In your HTML template, if a user is logged in, in a paragraph tag, display a welcome message otherwise display a default message as shown in the table below.</p>
+<table class="hbtn-table"><tr>
+<th>msgid</th>
+<th>English</th>
+<th>French</th>
+</tr>
+<tr>
+<td><code>logged_in_as</code></td>
+<td><code>&quot;You are logged in as %(username)s.&quot;</code></td>
+<td><code>&quot;Vous êtes connecté en tant que %(username)s.&quot;</code></td>
+</tr>
+<tr>
+<td><code>not_logged_in</code></td>
+<td><code>&quot;You are not logged in.&quot;</code></td>
+<td><code>&quot;Vous n&#39;êtes pas connecté.&quot;</code></td>
+</tr>
+</table>
+<p><strong>Visiting <code>http://127.0.0.1:5000/</code> in your browser should display this:</strong></p>
+
+<br><strong> Hello world!</strong>
+<br> <strong>You are not logged in.</strong>
+
+<p><strong>Visiting <code>http://127.0.0.1:5000/?login_as=2</code> in your browser should display this:</strong>
+</p>
+
+<br> <strong>Hello world!</strong>
+<br> <strong>You are logged in as Beyonce.</strong>
+
+  </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      6. Use user locale
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+   <!-- Progress vs Score -->
+   <div class="task_progress_score_bar" data-task-id="21890" data-correction-id="707695">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+  <!-- Task Body -->
+  <p>Change your <code>get_locale</code> function to use a user&rsquo;s preferred local if it is supported.</p>
+
+<p>The order of priority should be</p>
+
+<ol>
+<li>Locale from URL parameters</li>
+<li>Locale from user settings</li>
+<li>Locale from request header</li>
+<li>Default locale</li>
+</ol>
+
+<p>Test by logging in as different users</p>
+
+<br><strong> Bonjour monde!</strong>
+<br><strong> Vous êtes connecté en tant que Spock.</strong>
+
+  </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      7. Infer appropriate time zone
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+   <!-- Progress vs Score -->
+   <div class="task_progress_score_bar" data-task-id="21891" data-correction-id="707695">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+  <!-- Task Body -->
+   <p>Define a <code>get_timezone</code> function and use the <code>babel.timezoneselector</code> decorator.</p>
+
+<p>The logic should be the same as <code>get_locale</code>:</p>
+
+<ol>
+<li>Find <code>timezone</code> parameter in URL parameters</li>
+<li>Find time zone from user settings</li>
+<li>Default to UTC</li>
+</ol>
+
+<p>Before returning a URL-provided or user time zone, you must validate that it is a valid time zone. To that, use <code>pytz.timezone</code> and catch the <code>pytz.exceptions.UnknownTimeZoneError</code> exception.</p>
+
+  </div>
