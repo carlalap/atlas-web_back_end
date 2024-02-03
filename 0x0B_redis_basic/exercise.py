@@ -39,7 +39,6 @@ class Cache:
         """Get the value from Redis and convert to int"""
         data = self._redis.get(key)
         try:
-            data = int(data.decode("utf-8"))
-        except Exception:
-            data = 0
-            return(data)
+            return int(data) if data is not None else None
+        except (ValueError, TypeError):
+            return None
