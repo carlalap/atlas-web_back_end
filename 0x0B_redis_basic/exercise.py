@@ -29,11 +29,17 @@ class Cache:
         else:
             return data
 
-    def get_str(self, data):
+    def get_str(self, key: str) -> str:
         """Get the value from Redis using
-        the get method with automatic conversion"""
+        the get method with conversion a UTF-8"""
+        data = self._redis.get(key)
         return data.decode("utf-8")
 
-    def get_int(self, data):
+    def get_int(self, key: str) -> int:
         """Get the value from Redis and convert to int"""
-        return int(data)
+        data = self._redis.get(key)
+        try:
+            data = int(data.decode("utf-8"))
+        except Exception:
+            data = 0
+            return(data)
