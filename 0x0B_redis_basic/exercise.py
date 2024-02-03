@@ -46,6 +46,7 @@ def replay(method: Callable):
     key = method.__qualname__
     input_key = key + ":inputs"
     output_key = key + ":outputs"
+    redis = method.__self__._redis
     counts = redis.get(key).decode("utf-8")
     print(f"{key} was called {counts} times:")
     list_in = redis.lrange(input_key, 0, -1)
