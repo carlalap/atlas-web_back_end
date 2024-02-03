@@ -18,8 +18,7 @@ def count_calls(method: Callable) -> Callable:
         returned by the original method."""
         self._redis.incr(key)
         return method(self, *args, **kwds)
-
-        return wrapper
+    return wrapper
 
 
 class Cache:
@@ -29,6 +28,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """Generate a random key using uuid"""
         key = str(uuid.uuid4())
@@ -54,5 +54,8 @@ class Cache:
 
     def get_int(self, key: str) -> int:
         """Get the value from Redis and convert to int"""
-        # data = self._redis.get(key)
-        return int(data)
+        data = self._redis.get(key)
+        try:
+            return int(data) if data is not None else None
+        except (ValueError, TypeError):
+            return None
