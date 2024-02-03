@@ -50,11 +50,11 @@ def replay(method: Callable):
     counts = redis.get(key).decode("utf-8")
     print(f"{key} was called {counts} times:")
     list_in = redis.lrange(input_key, 0, -1)
-    list_out = redis.lrange(input_key, 0, -1)
+    list_out = redis.lrange(output_key, 0, -1)
     zip_list = list(zip(list_in, list_out))
     for a, b in zip_list:
-        attr, result = a.decode("utf-8"), b.decode("utf-8")
-        print(f"{key}(*{attr}) -> {result}")
+        attr, routput = a.decode("utf-8"), b.decode("utf-8")
+        print(f"{key}(*{attr}) -> {routput}")
 
 
 class Cache:
