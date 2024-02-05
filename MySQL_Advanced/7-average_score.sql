@@ -4,14 +4,15 @@
 delimiter //
 CREATE PROCEDURE ComputeAverageScoreForUser (IN user_id INT)
 BEGIN
-    DECLARE number_of_corrections INT;
-    DECLARE avge_score FLOAT;
+    DECLARE avge_score DECIMAL(10, 2);  -- Use DECIMAL for average score
 
-    -- Calculate total Score for the user
-    SELECT AVG(score) INTO number_of_corrections FROM corrections WHERE user_id = corrections.user_id.user_id;
-    -- Calculate the number of corrections for the user
+    -- Calculate average score for the user
+    SELECT AVG(score) INTO avge_score FROM corrections WHERE user_id = user_id;
+
+    -- Update users table with the calculated average score
     UPDATE users SET average_score = avge_score WHERE id = user_id;
 END;
 //
-delimiter;
+delimiter ;
+
 
