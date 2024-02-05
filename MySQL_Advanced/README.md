@@ -106,10 +106,8 @@ $
   </div>
 </div>
 
-
 <h2 class="gap">Tasks</h2>
-
-    <div data-role="task19829" data-position="1" id="task-num-0">
+  <div data-role="task19829" data-position="1" id="task-num-0">
       <div class="panel panel-default task-card " id="task-19829">
   <span id="user_id" data-id="6138"></span>
 
