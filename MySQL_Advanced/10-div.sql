@@ -5,6 +5,7 @@ DELIMITER //
 
 CREATE function SafeDiv(a INT, b INT)
 RETURNS FLOAT
+DETERMINISTIC
 BEGIN
     DECLARE result INT;
     IF b = 0 THEN
