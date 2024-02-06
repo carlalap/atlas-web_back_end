@@ -386,3 +386,724 @@ bob@dylan:~$
 </code></pre>
 
   </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      5. Email validation to sent
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+  <!-- Progress vs Score -->
+  <div class="task_progress_score_bar" data-task-id="19834" data-correction-id="707751">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+  <!-- Task Body -->
+  <p>Write a SQL script that creates a trigger that resets the attribute <code>valid_email</code> only when the <code>email</code> has been changed.</p>
+
+<p><strong>Context:</strong>
+<em>Nothing related to MySQL, but perfect for user email validation - distribute the logic to the database itself!</em></p>
+
+<pre><code>bob@dylan:~$ cat 5-init.sql
+-- Initial
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE IF NOT EXISTS users (
+    id int not null AUTO_INCREMENT,
+    email varchar(255) not null,
+    name varchar(255),
+    valid_email boolean not null default 0,
+    PRIMARY KEY (id)
+);
+
+INSERT INTO users (email, name) VALUES (&quot;bob@dylan.com&quot;, &quot;Bob&quot;);
+INSERT INTO users (email, name, valid_email) VALUES (&quot;sylvie@dylan.com&quot;, &quot;Sylvie&quot;, 1);
+INSERT INTO users (email, name, valid_email) VALUES (&quot;jeanne@dylan.com&quot;, &quot;Jeanne&quot;, 1);
+
+bob@dylan:~$ 
+bob@dylan:~$ cat 5-init.sql | mysql -uroot -p holberton 
+Enter password: 
+bob@dylan:~$ 
+bob@dylan:~$ cat 5-valid_email.sql | mysql -uroot -p holberton 
+Enter password: 
+bob@dylan:~$ 
+bob@dylan:~$ cat 5-main.sql
+Enter password: 
+-- Show users and update (or not) email
+SELECT * FROM users;
+
+UPDATE users SET valid_email = 1 WHERE email = &quot;bob@dylan.com&quot;;
+UPDATE users SET email = &quot;sylvie+new@dylan.com&quot; WHERE email = &quot;sylvie@dylan.com&quot;;
+UPDATE users SET name = &quot;Jannis&quot; WHERE email = &quot;jeanne@dylan.com&quot;;
+
+SELECT &quot;--&quot;;
+SELECT * FROM users;
+
+UPDATE users SET email = &quot;bob@dylan.com&quot; WHERE email = &quot;bob@dylan.com&quot;;
+
+SELECT &quot;--&quot;;
+SELECT * FROM users;
+
+bob@dylan:~$ 
+bob@dylan:~$ cat 5-main.sql | mysql -uroot -p holberton 
+Enter password: 
+id  email   name    valid_email
+1   bob@dylan.com   Bob 0
+2   sylvie@dylan.com    Sylvie  1
+3   jeanne@dylan.com    Jeanne  1
+--
+--
+id  email   name    valid_email
+1   bob@dylan.com   Bob 1
+2   sylvie+new@dylan.com    Sylvie  0
+3   jeanne@dylan.com    Jannis  1
+--
+--
+id  email   name    valid_email
+1   bob@dylan.com   Bob 1
+2   sylvie+new@dylan.com    Sylvie  0
+3   jeanne@dylan.com    Jannis  1
+bob@dylan:~$ 
+</code></pre>
+
+  </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      6. Add bonus
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+  <!-- Progress vs Score -->
+  <div class="task_progress_score_bar" data-task-id="19835" data-correction-id="707751">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+    <!-- Task Body -->
+    <p>Write a SQL script that creates a stored procedure <code>AddBonus</code> that adds a new correction for a student.</p>
+
+<p><strong>Requirements:</strong></p>
+
+<ul>
+<li>Procedure <code>AddBonus</code> is taking 3 inputs (in this order):
+
+<ul>
+<li><code>user_id</code>, a <code>users.id</code> value (you can assume <code>user_id</code> is linked to an existing <code>users</code>)</li>
+<li><code>project_name</code>, a new or already exists <code>projects</code> - if no <code>projects.name</code> found in the table, you should create it</li>
+<li><code>score</code>, the score value for the correction</li>
+</ul></li>
+</ul>
+
+<p><strong>Context:</strong>
+<em>Write code in SQL is a nice level up!</em></p>
+
+<pre><code>bob@dylan:~$ cat 6-init.sql
+-- Initial
+DROP TABLE IF EXISTS corrections;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS projects;
+
+CREATE TABLE IF NOT EXISTS users (
+    id int not null AUTO_INCREMENT,
+    name varchar(255) not null,
+    average_score float default 0,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS projects (
+    id int not null AUTO_INCREMENT,
+    name varchar(255) not null,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS corrections (
+    user_id int not null,
+    project_id int not null,
+    score int default 0,
+    KEY `user_id` (`user_id`),
+    KEY `project_id` (`project_id`),
+    CONSTRAINT fk_user_id FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+    CONSTRAINT fk_project_id FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE
+);
+
+INSERT INTO users (name) VALUES (&quot;Bob&quot;);
+SET @user_bob = LAST_INSERT_ID();
+
+INSERT INTO users (name) VALUES (&quot;Jeanne&quot;);
+SET @user_jeanne = LAST_INSERT_ID();
+
+INSERT INTO projects (name) VALUES (&quot;C is fun&quot;);
+SET @project_c = LAST_INSERT_ID();
+
+INSERT INTO projects (name) VALUES (&quot;Python is cool&quot;);
+SET @project_py = LAST_INSERT_ID();
+
+
+INSERT INTO corrections (user_id, project_id, score) VALUES (@user_bob, @project_c, 80);
+INSERT INTO corrections (user_id, project_id, score) VALUES (@user_bob, @project_py, 96);
+
+INSERT INTO corrections (user_id, project_id, score) VALUES (@user_jeanne, @project_c, 91);
+INSERT INTO corrections (user_id, project_id, score) VALUES (@user_jeanne, @project_py, 73);
+
+bob@dylan:~$ 
+bob@dylan:~$ cat 6-init.sql | mysql -uroot -p holberton 
+Enter password: 
+bob@dylan:~$ 
+bob@dylan:~$ cat 6-bonus.sql | mysql -uroot -p holberton 
+Enter password: 
+bob@dylan:~$ 
+bob@dylan:~$ cat 6-main.sql
+Enter password: 
+-- Show and add bonus correction
+SELECT * FROM projects;
+SELECT * FROM corrections;
+
+SELECT &quot;--&quot;;
+
+CALL AddBonus((SELECT id FROM users WHERE name = &quot;Jeanne&quot;), &quot;Python is cool&quot;, 100);
+
+CALL AddBonus((SELECT id FROM users WHERE name = &quot;Jeanne&quot;), &quot;Bonus project&quot;, 100);
+CALL AddBonus((SELECT id FROM users WHERE name = &quot;Bob&quot;), &quot;Bonus project&quot;, 10);
+
+CALL AddBonus((SELECT id FROM users WHERE name = &quot;Jeanne&quot;), &quot;New bonus&quot;, 90);
+
+SELECT &quot;--&quot;;
+
+SELECT * FROM projects;
+SELECT * FROM corrections;
+
+bob@dylan:~$ 
+bob@dylan:~$ cat 6-main.sql | mysql -uroot -p holberton 
+Enter password: 
+id  name
+1   C is fun
+2   Python is cool
+user_id project_id  score
+1   1   80
+1   2   96
+2   1   91
+2   2   73
+--
+--
+--
+--
+id  name
+1   C is fun
+2   Python is cool
+3   Bonus project
+4   New bonus
+user_id project_id  score
+1   1   80
+1   2   96
+2   1   91
+2   2   73
+2   2   100
+2   3   100
+1   3   10
+2   4   90
+bob@dylan:~$ 
+</code></pre>
+
+  </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      7. Average score
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+   <!-- Progress vs Score -->
+   <div class="task_progress_score_bar" data-task-id="19836" data-correction-id="707751">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+  <!-- Task Body -->
+  <p>Write a SQL script that creates a stored procedure <code>ComputeAverageScoreForUser</code> that computes and store the average score for a student.
+Note: An average score can be a decimal</p>
+
+<p><strong>Requirements:</strong></p>
+
+<ul>
+<li>Procedure <code>ComputeAverageScoreForUser</code> is taking 1 input:
+
+<ul>
+<li><code>user_id</code>, a <code>users.id</code> value (you can assume <code>user_id</code> is linked to an existing <code>users</code>)</li>
+</ul></li>
+</ul>
+
+<pre><code>bob@dylan:~$ cat 7-init.sql
+-- Initial
+DROP TABLE IF EXISTS corrections;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS projects;
+
+CREATE TABLE IF NOT EXISTS users (
+    id int not null AUTO_INCREMENT,
+    name varchar(255) not null,
+    average_score float default 0,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS projects (
+    id int not null AUTO_INCREMENT,
+    name varchar(255) not null,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS corrections (
+    user_id int not null,
+    project_id int not null,
+    score int default 0,
+    KEY `user_id` (`user_id`),
+    KEY `project_id` (`project_id`),
+    CONSTRAINT fk_user_id FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+    CONSTRAINT fk_project_id FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE
+);
+
+INSERT INTO users (name) VALUES (&quot;Bob&quot;);
+SET @user_bob = LAST_INSERT_ID();
+
+INSERT INTO users (name) VALUES (&quot;Jeanne&quot;);
+SET @user_jeanne = LAST_INSERT_ID();
+
+INSERT INTO projects (name) VALUES (&quot;C is fun&quot;);
+SET @project_c = LAST_INSERT_ID();
+
+INSERT INTO projects (name) VALUES (&quot;Python is cool&quot;);
+SET @project_py = LAST_INSERT_ID();
+
+
+INSERT INTO corrections (user_id, project_id, score) VALUES (@user_bob, @project_c, 80);
+INSERT INTO corrections (user_id, project_id, score) VALUES (@user_bob, @project_py, 96);
+
+INSERT INTO corrections (user_id, project_id, score) VALUES (@user_jeanne, @project_c, 91);
+INSERT INTO corrections (user_id, project_id, score) VALUES (@user_jeanne, @project_py, 73);
+
+bob@dylan:~$ 
+bob@dylan:~$ cat 7-init.sql | mysql -uroot -p holberton 
+Enter password: 
+bob@dylan:~$ 
+bob@dylan:~$ cat 7-average_score.sql | mysql -uroot -p holberton 
+Enter password: 
+bob@dylan:~$ 
+bob@dylan:~$ cat 7-main.sql
+-- Show and compute average score
+SELECT * FROM users;
+SELECT * FROM corrections;
+
+SELECT &quot;--&quot;;
+CALL ComputeAverageScoreForUser((SELECT id FROM users WHERE name = &quot;Jeanne&quot;));
+
+SELECT &quot;--&quot;;
+SELECT * FROM users;
+
+bob@dylan:~$ 
+bob@dylan:~$ cat 7-main.sql | mysql -uroot -p holberton 
+Enter password: 
+id  name    average_score
+1   Bob 0
+2   Jeanne  0
+user_id project_id  score
+1   1   80
+1   2   96
+2   1   91
+2   2   73
+--
+--
+--
+--
+id  name    average_score
+1   Bob 0
+2   Jeanne  82
+bob@dylan:~$ 
+</code></pre>
+</div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      8. Optimize simple search
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+  <!-- Progress vs Score -->
+   <div class="task_progress_score_bar" data-task-id="19837" data-correction-id="707751">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+  <!-- Task Body -->
+  <p>Write a SQL script that creates an index <code>idx_name_first</code> on the table <code>names</code> and the first letter of <code>name</code>.</p>
+
+<p><strong>Requirements:</strong></p>
+
+<ul>
+<li>Import this table dump: <a href="https://intranet-projects-files.s3.amazonaws.com/holbertonschool-webstack/632/names.sql.zip" title="names.sql.zip" target="_blank">names.sql.zip</a></li>
+<li>Only the first letter of <code>name</code> must be indexed</li>
+</ul>
+
+<p><strong>Context:</strong>
+<em>Index is not the solution for any performance issue, but well used, it&rsquo;s really powerful!</em></p>
+
+<pre><code>bob@dylan:~$ cat names.sql | mysql -uroot -p holberton
+Enter password: 
+bob@dylan:~$ 
+bob@dylan:~$ mysql -uroot -p holberton
+Enter password: 
+mysql&gt; SELECT COUNT(name) FROM names WHERE name LIKE &#39;a%&#39;;
++-------------+
+| COUNT(name) |
++-------------+
+|      302936 |
++-------------+
+1 row in set (2.19 sec)
+mysql&gt; 
+mysql&gt; exit
+bye
+bob@dylan:~$ 
+bob@dylan:~$ cat 8-index_my_names.sql | mysql -uroot -p holberton 
+Enter password: 
+bob@dylan:~$ 
+bob@dylan:~$ mysql -uroot -p holberton
+Enter password: 
+mysql&gt; SHOW index FROM names;
++-------+------------+----------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| Table | Non_unique | Key_name       | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment |
++-------+------------+----------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| names |          1 | idx_name_first |            1 | name        | A         |          25 |        1 | NULL   | YES  | BTREE      |         |               |
++-------+------------+----------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+1 row in set (0.00 sec)
+mysql&gt; 
+mysql&gt; SELECT COUNT(name) FROM names WHERE name LIKE &#39;a%&#39;;
++-------------+
+| COUNT(name) |
++-------------+
+|      302936 |
++-------------+
+1 row in set (0.82 sec)
+mysql&gt; 
+mysql&gt; exit
+bye
+bob@dylan:~$ 
+</code></pre>
+
+  </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      9. Optimize search and score
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+   <!-- Progress vs Score -->
+   <div class="task_progress_score_bar" data-task-id="19838" data-correction-id="707751">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+  <!-- Task Body -->
+   <p>Write a SQL script that creates an index <code>idx_name_first_score</code> on the table <code>names</code> and the first letter of <code>name</code> and the <code>score</code>.</p>
+
+<p><strong>Requirements:</strong></p>
+
+<ul>
+<li>Import this table dump: <a href="https://intranet-projects-files.s3.amazonaws.com/holbertonschool-webstack/632/names.sql.zip" title="names.sql.zip" target="_blank">names.sql.zip</a></li>
+<li>Only the first letter of <code>name</code> AND <code>score</code> must be indexed</li>
+</ul>
+
+<pre><code>bob@dylan:~$ cat names.sql | mysql -uroot -p holberton
+Enter password: 
+bob@dylan:~$ 
+bob@dylan:~$ mysql -uroot -p holberton
+Enter password: 
+mysql&gt; SELECT COUNT(name) FROM names WHERE name LIKE &#39;a%&#39; AND score &lt; 80;
++-------------+
+| count(name) |
++-------------+
+|       60717 |
++-------------+
+1 row in set (2.40 sec)
+mysql&gt; 
+mysql&gt; exit
+bye
+bob@dylan:~$ 
+bob@dylan:~$ cat 9-index_name_score.sql | mysql -uroot -p holberton 
+Enter password: 
+bob@dylan:~$ 
+bob@dylan:~$ mysql -uroot -p holberton
+Enter password: 
+mysql&gt; SHOW index FROM names;
++-------+------------+----------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| Table | Non_unique | Key_name             | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment |
++-------+------------+----------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| names |          1 | idx_name_first_score |            1 | name        | A         |          25 |        1 | NULL   | YES  | BTREE      |         |               |
+| names |          1 | idx_name_first_score |            2 | score       | A         |        3901 |     NULL | NULL   | YES  | BTREE      |         |               |
++-------+------------+----------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+2 rows in set (0.00 sec)
+mysql&gt; 
+mysql&gt; SELECT COUNT(name) FROM names WHERE name LIKE &#39;a%&#39; AND score &lt; 80;
++-------------+
+| COUNT(name) |
++-------------+
+|       60717 |
++-------------+
+1 row in set (0.48 sec)
+mysql&gt; 
+mysql&gt; exit
+bye
+bob@dylan:~$ 
+</code></pre>
+
+  </div>
+
+ <div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      10. Safe divide
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+  <!-- Progress vs Score -->
+  <div class="task_progress_score_bar" data-task-id="19839" data-correction-id="707751">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+  <!-- Task Body -->
+  <p>Write a SQL script that creates a function <code>SafeDiv</code> that divides (and returns) the first by the second number or returns 0 if the second number is equal to 0.</p>
+
+<p><strong>Requirements:</strong></p>
+
+<ul>
+<li>You must create a function</li>
+<li>The function <code>SafeDiv</code> takes 2 arguments:
+
+<ul>
+<li><code>a</code>, INT</li>
+<li><code>b</code>, INT</li>
+</ul></li>
+<li>And returns <code>a / b</code> or 0 if <code>b == 0</code></li>
+</ul>
+
+<pre><code>bob@dylan:~$ cat 10-init.sql
+-- Initial
+DROP TABLE IF EXISTS numbers;
+
+CREATE TABLE IF NOT EXISTS numbers (
+    a int default 0,
+    b int default 0
+);
+
+INSERT INTO numbers (a, b) VALUES (10, 2);
+INSERT INTO numbers (a, b) VALUES (4, 5);
+INSERT INTO numbers (a, b) VALUES (2, 3);
+INSERT INTO numbers (a, b) VALUES (6, 3);
+INSERT INTO numbers (a, b) VALUES (7, 0);
+INSERT INTO numbers (a, b) VALUES (6, 8);
+
+bob@dylan:~$ cat 10-init.sql | mysql -uroot -p holberton
+Enter password: 
+bob@dylan:~$ 
+bob@dylan:~$ cat 10-div.sql | mysql -uroot -p holberton
+Enter password: 
+bob@dylan:~$ 
+bob@dylan:~$ echo &quot;SELECT (a / b) FROM numbers;&quot; | mysql -uroot -p holberton
+Enter password: 
+(a / b)
+5.0000
+0.8000
+0.6667
+2.0000
+NULL
+0.7500
+bob@dylan:~$ 
+bob@dylan:~$ echo &quot;SELECT SafeDiv(a, b) FROM numbers;&quot; | mysql -uroot -p holberton
+Enter password: 
+SafeDiv(a, b)
+5
+0.800000011920929
+0.6666666865348816
+2
+0
+0.75
+bob@dylan:~$ 
+</code></pre>
+
+  </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      11. No table for a meeting
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+  <!-- Progress vs Score -->
+   <div class="task_progress_score_bar" data-task-id="19840" data-correction-id="707751">
+        <div class="task_progress_bar">
+          <div class="task_score_bar">
+          </div>
+        </div>
+        <div class="task_progress_score_text">
+          Score: <span class="task_score_value">0%</span> (<span class="task_progress_value">Checks completed: 0%</span>)
+        </div>
+      </div>
+
+  <!-- Task Body -->
+  <p>Write a SQL script that creates a view <code>need_meeting</code> that lists all students that have a score under 80 (strict) and no <code>last_meeting</code> or more than 1 month.</p>
+
+<p><strong>Requirements:</strong></p>
+
+<ul>
+<li>The view <code>need_meeting</code> should return all students name when:
+
+<ul>
+<li>They score are under (strict) to 80</li>
+<li><strong>AND</strong> no <code>last_meeting</code> date <strong>OR</strong> more than a month</li>
+</ul></li>
+</ul>
+
+<pre><code>bob@dylan:~$ cat 11-init.sql
+-- Initial
+DROP TABLE IF EXISTS students;
+
+CREATE TABLE IF NOT EXISTS students (
+    name VARCHAR(255) NOT NULL,
+    score INT default 0,
+    last_meeting DATE NULL 
+);
+
+INSERT INTO students (name, score) VALUES (&quot;Bob&quot;, 80);
+INSERT INTO students (name, score) VALUES (&quot;Sylvia&quot;, 120);
+INSERT INTO students (name, score) VALUES (&quot;Jean&quot;, 60);
+INSERT INTO students (name, score) VALUES (&quot;Steeve&quot;, 50);
+INSERT INTO students (name, score) VALUES (&quot;Camilia&quot;, 80);
+INSERT INTO students (name, score) VALUES (&quot;Alexa&quot;, 130);
+
+bob@dylan:~$ cat 11-init.sql | mysql -uroot -p holberton
+Enter password: 
+bob@dylan:~$ 
+bob@dylan:~$ cat 11-need_meeting.sql | mysql -uroot -p holberton
+Enter password: 
+bob@dylan:~$ 
+bob@dylan:~$ cat 11-main.sql
+-- Test view
+SELECT * FROM need_meeting;
+
+SELECT &quot;--&quot;;
+
+UPDATE students SET score = 40 WHERE name = &#39;Bob&#39;;
+SELECT * FROM need_meeting;
+
+SELECT &quot;--&quot;;
+
+UPDATE students SET score = 80 WHERE name = &#39;Steeve&#39;;
+SELECT * FROM need_meeting;
+
+SELECT &quot;--&quot;;
+
+UPDATE students SET last_meeting = CURDATE() WHERE name = &#39;Jean&#39;;
+SELECT * FROM need_meeting;
+
+SELECT &quot;--&quot;;
+
+UPDATE students SET last_meeting = ADDDATE(CURDATE(), INTERVAL -2 MONTH) WHERE name = &#39;Jean&#39;;
+SELECT * FROM need_meeting;
+
+SELECT &quot;--&quot;;
+
+SHOW CREATE TABLE need_meeting;
+
+SELECT &quot;--&quot;;
+
+SHOW CREATE TABLE students;
+
+bob@dylan:~$ 
+bob@dylan:~$ cat 11-main.sql | mysql -uroot -p holberton
+Enter password: 
+name
+Jean
+Steeve
+--
+--
+name
+Bob
+Jean
+Steeve
+--
+--
+name
+Bob
+Jean
+--
+--
+name
+Bob
+--
+--
+name
+Bob
+Jean
+--
+--
+View    Create View character_set_client    collation_connection
+XXXXXX&lt;yes, here it will display the View SQL statement :-) &gt;XXXXXX
+--
+--
+Table   Create Table
+students    CREATE TABLE `students` (\n  `name` varchar(255) NOT NULL,\n  `score` int(11) DEFAULT &#39;0&#39;,\n  `last_meeting` date DEFAULT NULL\n) ENGINE=InnoDB DEFAULT CHARSET=latin1
+bob@dylan:~$ 
+</code></pre>
+
+  </div>
