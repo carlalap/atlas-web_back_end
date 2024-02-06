@@ -1,15 +1,16 @@
---task10. Safe divide
+-- task10. Safe divide
 -- SQL script that creates a function SafeDiv that divides (and returns)
 -- the first by the second number or returns 0 if the second number is equal to 0.
-DELIMITER //
+delimiter //
+DROP FUNCTION IF EXISTS SafeDiv;
 CREATE function SafeDiv(a INT, b INT)
-RETURNS FLOAT
+RETURNS FLOAT 
 DETERMINISTIC
 BEGIN
     IF b = 0 THEN
         RETURN 0;
     END IF;
-    RETURN = a / b;
+    RETURN a / b;
 END;
 //
-DELIMITER;
+delimiter ;
