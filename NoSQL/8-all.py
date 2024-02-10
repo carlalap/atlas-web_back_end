@@ -4,4 +4,7 @@
 
 def list_all(mongo_collection):
     """function that lists all documents in a collection"""
-    return mongo_collection.find() or []
+    if mongo_collection.count_documents({}) > 0:
+        return mongo_collection.find({})
+    else:
+        return []
