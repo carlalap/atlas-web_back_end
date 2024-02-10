@@ -8,7 +8,6 @@ def nginx_logs_stats():
     """Connecting to MongoDB"""
     client = MongoClient('localhost', 27017)
     db = client.logs.nginx
-    collection = db['nginx']
 
     # Get the total number of documents in the collection
     count_logs = db.count_documents({})
