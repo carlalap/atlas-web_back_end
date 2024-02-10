@@ -4,7 +4,7 @@
 from pymongo import MongoClient
 
 
-def nginx_logs_stats():
+if __name__ == "__main__":
     """Connecting to MongoDB"""
     client = MongoClient('localhost', 27017)
     db = client.logs.nginx
@@ -23,7 +23,3 @@ def nginx_logs_stats():
     count_status = db.count_documents(
         {"method": "GET", "path": "/status"})
     print(f"{count_status}  status check")
-
-
-if __name__ == "__main__":
-    nginx_logs_stats()
