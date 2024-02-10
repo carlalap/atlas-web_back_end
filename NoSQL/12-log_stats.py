@@ -14,9 +14,8 @@ def nginx_logs_stats():
     print(f"{count_logs} logs")
 
     # Get the count of logs for each method
-    methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     print("Methods:")
-    for method in methods:
+    for method in ["GET", "POST", "PUT", "PATCH", "DELETE"]:
         count = db.count_documents({"method": method})
         print(f"\tmethod {method} = {count}")
 
