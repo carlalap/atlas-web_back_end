@@ -20,6 +20,5 @@ if __name__ == "__main__":
         print(f"\tmethod {method}: {count}")
 
     # Get the count of logs with method=GET and path=/status
-    count_status = DB.count_documents(
-        {"method": "GET", "path": "/status"})
-    print(f"{count_status}  status check")
+    count_status = DB.count_documents({"path": "/status"})
+    print(f"{count_status} status check")
