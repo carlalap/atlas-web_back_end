@@ -377,9 +377,8 @@ bob@dylan:~$
     <span id="user_id" data-id="6138"></span>
 
 <!-- Progress vs Score -->
-
-  <!-- Task Body -->
-  <p>In a file named <code>4-http.js</code>, create a small HTTP server using the <code>http</code> module:</p>
+<!-- Task Body -->
+<p>In a file named <code>4-http.js</code>, create a small HTTP server using the <code>http</code> module:</p>
 
 <ul>
 <li>It should be assigned to the variable <code>app</code> and this one must be exported </li>
