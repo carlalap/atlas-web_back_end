@@ -1,4 +1,2 @@
-function displayMessage(argv) {
-    console.log(argv);
-}
+const displayMessage = (str) => console.log(str);
 module.exports = displayMessage;
