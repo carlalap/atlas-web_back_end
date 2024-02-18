@@ -3,36 +3,43 @@
 const fs = require('fs');
 
 const countStudents = (path) => {
-  const fields = {};
   let data;
+  const fields = {};
 
   try {
     data = fs.readFileSync(path);
   } catch (error) {
+    // If the database is not available, throw an error
     throw new Error('Cannot load the database');
   }
-
+  // converts the data read from the file into a string and splits the string
   data = data.toString().split('\n');
-  data = data.filter((element) => element.length > 0);
+  // removes any empty lines from the data array
+  data = data.filter((item) => item.length > 0);
+  //  removes the header row of the CSV file
   data.shift();
 
-  data.forEach((element) => {
-    if (element.length > 0) {
-      const row = element.split(',');
-      if (row[3] in fields) {
-        fields[row[3]].push(row[0]);
+  // loop that iterate over each line in the data array.
+  data.forEach((item) => {
+    if (item.length > 0) {
+      const dataRow = item.split(',');
+      if (dataRow[3] in fields) {
+        fields[dataRow[3]].push(dataRow[0]);
       } else {
-        fields[row[3]] = [row[0]];
+        fields[dataRow[3]] = [dataRow[0]];
       }
     }
   });
+  // prints the total number of students
   console.log(`Number of students: ${data.length}`);
+  // loop taht iterate over each key in the fields object, Each field (CS, SWE)
   for (const field in fields) {
+    // checks if the field is not empty
     if (field) {
       const list = fields[field];
       console.log(`Number of students in ${field}: ${list.length}. List: ${list.toString().replace(/,/g, ', ')}`);
     }
   }
 };
-
+// exports the countStudent function
 module.exports = countStudents;
