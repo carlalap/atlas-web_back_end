@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "babel-cli": "*",
+    "babel-preset-env": "*",
+    "chai": "^5.1.0",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "*",
+    "eslint-plugin-import": "*",
+    "eslint-plugin-jest": "*",
+    "eslint-plugin-mocha": "^10.3.0",
+    "esm": "^3.2.25",
+    "mocha": "^10.3.0",
+    "sinon": "^17.0.1"
+  }
+}
