@@ -8,7 +8,8 @@ const countStudents = require('./3-read_file_async'); // Import the countStudent
 const port = 1245; // Set the port to 1245
 
 const app = http.createServer(async (request, response) => { // Create a new HTTP server
-  response.writeHead(200, { 'Content-Type': 'text/plain' }); // Set the response header
+  response.writeHead(200, {
+    'Content-Type': 'text/plain' }); // Set the response header
   if (request.url === '/') response.write('Hello Holberton School!');
   if (request.url === '/students') { // If the request URL is '/students'
     response.write('This is the list of our students\n');
@@ -21,6 +22,7 @@ const app = http.createServer(async (request, response) => { // Create a new HTT
   }
   response.end();
 });
+
 app.listen(port, (error) => { // Start the server and listen on the specified port
   if (error) { // If an error occurs while starting the server
     console.log('Something went wrong', error); // Log the error message
