@@ -5,22 +5,28 @@
 const http = require('http'); // Import the http module
 const countStudents = require('./3-read_file_async'); // Import the countStudents function from the 3-read_file_async module
 
+
 const port = 1245; // Set the port to 1245
 
 const app = http.createServer(async (request, response) => { // Create a new HTTP server
   response.writeHead(200, {
     'Content-Type': 'text/plain' }); // Set the response header
-  if (request.url === '/') response.write('Hello Holberton School!');
-  if (request.url === '/students') { // If the request URL is '/students'
-    response.write('This is the list of our students\n');
-    try { // Try to fetch the list of students asynchronously
-      const data = await countStudents(process.argv[2]);
-      response.end(`${data.join('\n')}`); // Write the list of students to the response and end the response
-    } catch (error) {
-      response.end(error.message);
-    }
+  if (request.url === '/') {
+    response.write('Hello Holberton School!');
+    response.end();
   }
-  response.end();
+  if (request.url === '/students') { // If the request URL is '/students'
+    countStudents(String(process.argv.slice(2)))
+      .then((fields) => {
+        response.write('This is the list of our students\n'); // write a response to the client
+for (const field in fields) {
+  if (field && field !== 'length') response.write(`Number of students in ${field}: ${fields[field].length}. List: ${fields[field].join(', ')}\n`);
+}
+response.end(); // end the response
+
+      })
+      .catch((error) => { throw error; });
+  }
 });
 
 app.listen(port, (error) => { // Start the server and listen on the specified port
