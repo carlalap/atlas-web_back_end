@@ -1,18 +1,18 @@
 // task5. Create a more complex HTTP server using Node's HTTP module
 // Script that creates a small HTTP server using the http module:
 // https://www.w3schools.com/nodejs/met_http_createserver.asp
-
+// task5. Create a more complex HTTP server using Node's HTTP module
+// Script that creates a small HTTP server using the http module:
+// https://www.w3schools.com/nodejs/met_http_createserver.asp
 const http = require('http'); // Import the http module
 const countStudents = require('./3-read_file_async'); // Import the countStudents function from the 3-read_file_async module
 
 const port = 1245; // Set the port to 1245
 
 const app = http.createServer(async (request, response) => { // Create a new HTTP server
-  response.writeHead(200, {
-    'Content-Type': 'text/plain' }); // Set the response header
-  if (request.url === '/') {
-    response.write('Hello Holberton School!'); 
-  } else if (request.url === '/students') { // If the request URL is '/students'
+  response.writeHead(200, { 'Content-Type': 'text/plain' }); // Set the response header
+  if (request.url === '/') response.write('Hello Holberton School!');
+  if (request.url === '/students') { // If the request URL is '/students'
     response.write('This is the list of our students\n');
     try { // Try to fetch the list of students asynchronously
       const data = await countStudents(process.argv[2]);
