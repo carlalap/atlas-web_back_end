@@ -4,7 +4,11 @@
 // HTTP server should listen on port 1245
 // Displays Hello Holberton School! in the page body for the endpoint /
 const express = require('express');
+
+const args = process.argv.slice(2);
 const countStudents = require('./3-read_file_async');
+
+const DB = args[0];
 
 const app = express();
 const port = 1245;
@@ -14,7 +18,7 @@ app.get('/', (request, response) => response.send('Hello Holberton School!'));
 app.get('/students', async (request, response) => {
   const message = 'This is the list of our students\n';
   try {
-    const students = await countStudents(process.argv[2]);
+    const students = await countStudents(DB);
     response.send(`${message}${students.join('\n')}`);
   } catch (error) {
     response.send(`${message}${error.message}`);
