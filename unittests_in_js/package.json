@@ -3,8 +3,9 @@
     "test": "mocha"
   },
   "devDependencies": {
-    "mocha": "*",
     "chai": "*",
+    "esm": "^3.2.25",
+    "mocha": "*",
     "sinon": "*"
   }
 }
