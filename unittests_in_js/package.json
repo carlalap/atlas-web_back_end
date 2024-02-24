@@ -3,7 +3,13 @@
     "test": "mocha"
   },
   "devDependencies": {
-    "chai": "^5.1.0",
+    "babel-cli": "*",
+    "babel-preset-env": "*",
+    "eslint": "*",
+    "eslint-config-airbnb-base": "*",
+    "eslint-plugin-import": "*",
+    "eslint-plugin-jest": "*",
+    "chai": "*",
     "esm": "^3.2.25",
     "mocha": "^10.3.0",
     "sinon": "^17.0.1"
