@@ -20,4 +20,4 @@ describe('sendPaymentRequestToApi', function() {
       expect(spyUtils.calledOnceWithExactly('SUM', 100, 20)).to.be.true;
       expect(spyConsole.calledOnceWithExactly('The total is: 120')).to.be.true;
     });
-  });
+  })
