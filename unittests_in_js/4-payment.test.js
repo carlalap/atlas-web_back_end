@@ -30,6 +30,6 @@ describe('sendPaymentRequestToApi', function() {
     expect(stubUtils.calledWith('SUM', 100, 20)).to.be.true;
 
     expect(spyConsole.calledOnce).to.be.true;
-    expect(spyConsole.calledWith('The total is: ${ message }')).to.be.true;
+    expect(spyConsole.calledWith(`The total is: ${ message }`)).to.be.true;
   });
 });
