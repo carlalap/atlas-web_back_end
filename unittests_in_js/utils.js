@@ -9,7 +9,7 @@ const Utils = {
         case 'DIVIDE':
           return a / b;
         default:
-          return 'Invalid operation type';
+          return 'Error';
       }
     }
   };
