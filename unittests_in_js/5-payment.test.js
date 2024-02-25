@@ -1,9 +1,9 @@
 const sinon = require('sinon');
-const expect = require('chai').expect;
+const { expect } = require('chai');
 const sendPaymentRequestToApi = require('./5-payment');
-const Utils = require('./utils');
 
-describe('sendPaymentRequestToApi', function() {
+
+describe('sendPaymentRequestToApi', () => {
   let spyConsole;
 
   beforeEach(() => {
@@ -17,13 +17,13 @@ describe('sendPaymentRequestToApi', function() {
     spyConsole.restore();
   });
 
-  it('checks output arguments with 100, and 20', function() {
+  it('checks output arguments with 100, and 20', () => {
     // Call the function
     sendPaymentRequestToApi(100, 20);
     expect(spyConsole.calledWith('The total is: 120')).to.be.true;
     });
 
-  it('checks output arguments with 10, and 10', function() {
+  it('checks output arguments with 10, and 10', () => {
     // Verify that Utils.calculateNumber was called with the correct arguments
     sendPaymentRequestToApi(10, 10);
     expect(spyConsole.calledWith('The total is: 20')).to.be.true;
