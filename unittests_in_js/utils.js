@@ -1,17 +1,21 @@
-// utils.js
+//task3. Spies - utils.js
 const Utils = {
-    calculateNumber: function(type, a, b) {
-      switch (type) {
-        case 'SUM':
-          return a + b;
-        case 'SUBTRACT':
-          return a - b;
-        case 'DIVIDE':
-          return a / b;
-        default:
-          return 'Error';
-      }
+  calculateNumber(type, a, b) {
+    const aNum = Math.round(a);
+    const bNum = Math.round(b);
+    if (type === 'SUM') {
+      return aNum + bNum;
     }
-  };
+    if (type === 'SUBTRACT') {
+      return aNum - bNum;
+    }
+    if (type === 'DIVIDE') {
+      if (bNum === 0) {
+        return 'Error';
+      }
+      return aNum / bNum;
+    }
+  },
+};
   
-  module.exports = Utils;
+module.exports = Utils;
