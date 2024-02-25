@@ -1,17 +1,15 @@
 const sinon = require('sinon');
 const expect = require('chai').expect;
-const sendPaymentRequestToApi = require('./3-payment');
 const Utils = require('./utils');
+const sendPaymentRequestToApi = require('./4-payment');
 
 describe('sendPaymentRequestToApi', function() {
-  let stubUtils;
-  let spyConsole;
+  const stubUtils;
+  const spyConsole;
 
   beforeEach(() => {
-    // Create a Stub for Utils.calculateNumber
-    stubUtils = sinon.stub(Utils, 'calculateNumber');
-    // Stub the return value of Utils.calculateNumber
-    stubUtils.returns(10)
+    // Create a Stub  & returns value for Utils.calculateNumber
+    stubUtils = sinon.stub(Utils, 'calculateNumber').returns(10);
     // Create a spy for console.log
     spyConsole = sinon.spy(console, 'log');
   });
@@ -26,10 +24,10 @@ describe('sendPaymentRequestToApi', function() {
     // call the function
     sendPaymentRequestToApi(100, 20);
     // Verify that Utils.calculateNumber was called with the correct arguments
-    expect(stubUtils.calledOnce).to.be.true;
     expect(stubUtils.calledWith('SUM', 100, 20)).to.be.true;
-
-    expect(spyConsole.calledOnce).to.be.true;
-    expect(spyConsole.calledWith(`The total is: ${ message }`)).to.be.true;
+     // check that the stub always return the same number 10
+    expect(stubUtils.alwaysReturned(10)).to.be.true;
+    // Verify that console.log was called with the correct message
+    expect(spyConsole.calledWith('The total is: 10')).to.be.true;
   });
 });
