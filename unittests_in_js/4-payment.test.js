@@ -1,24 +1,35 @@
 const sinon = require('sinon');
-const { expect } = require('chai');
-
-const sendPaymentRequestToApi = require('./4-payment');
+const expect = require('chai').expect;
+const sendPaymentRequestToApi = require('./3-payment');
 const Utils = require('./utils');
 
-describe('sendPaymentRequestToApi', () => {
-  const consoleSpy = sinon.spy(console, 'log');
-  it('validate the usage of the Utils function', () => {
-    // Stub the function always return the same number 10
-    const NumStub = sinon.stub(Utils, 'calculateNumber').returns(10);
-    // run the function with the parameters
-    sendPaymentRequestToApi(100, 20);
-    // Verify that the stub is being called with type = SUM, a = 100, and b = 20
-    expect(calcNumStub.calledWith('SUM', 100, 20)).to.be.true;
-    // check that the stub always return the same number 10
-    expect(calcNumStub.alwaysReturned(10)).to.be.true;
-    // check with spy that console.log is logging the correct message 
-    expect(consoleSpy.calledWith('The total is: 10')).to.be.true;
+describe('sendPaymentRequestToApi', function() {
+  let stubUtils;
+  let spyConsole;
 
-    calcNumStub.restore();
-    consoleSpy.restore();
+  beforeEach(() => {
+    // Create a Stub for Utils.calculateNumber
+    stubUtils = sinon.stub(Utils, 'calculateNumber');
+    // Stub the return value of Utils.calculateNumber
+    stubUtils.returns(10)
+    // Create a spy for console.log
+    spyConsole = sinon.spy(console, 'log');
+  });
+
+  afterEach(() => {
+    // Restore the stub and the spy
+    stubUtils.restore();
+    spyConsole.restore();
+  });
+
+  it('should call Utils.calculateNumber with the correct arguments and log the result', function() {
+    // call the function
+    sendPaymentRequestToApi(100, 20);
+    // Verify that Utils.calculateNumber was called with the correct arguments
+    expect(stubUtils.calledOnce).to.be.true;
+    expect(stubUtils.calledWith('SUM', 100, 20)).to.be.true;
+
+    expect(spyConsole.calledOnce).to.be.true;
+    expect(spyConsole.calledWith('SUM', 100, 20)).to.be.true;
   });
 });
