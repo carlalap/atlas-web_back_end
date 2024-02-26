@@ -1,3 +1,5 @@
+// task4. Node Redis client and advanced operations
+// Script that use the client to store a hash value
 import redis from 'redis';
 const client = redis.createClient();
 
