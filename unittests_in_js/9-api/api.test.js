@@ -38,7 +38,7 @@ describe('Suite test', () => {
     describe('GET /cart/321', () => {
       it('Responds with OK 200 and id 321 in msg', (done) => {
         const options = {
-          url: 'http://localhost:7865/cart/1x',
+          url: 'http://localhost:7865/cart/321',
           method: 'GET',
         };
 
@@ -50,8 +50,36 @@ describe('Suite test', () => {
       });
     });
 
-    describe('GET /cart/atlas', () => {
-      it('Responds with 404', (done) => {
+    describe('GET /cart/b12', () => {
+      it('Responds with error 404', (done) => {
+        const options = {
+          url: 'http://localhost:7865/cart/b12',
+          method: 'GET',
+        };
+  
+        request(options, function (error, response, body) {
+          expect(response.statusCode).to.equal(404);
+          done();
+        });
+      });
+    });
+
+    describe('GET /cart/12b', () => {
+      it('Responds with error 404', (done) => {
+        const options = {
+          url: 'http://localhost:7865/cart/12b',
+          method: 'GET',
+        };
+  
+        request(options, function (error, response, body) {
+          expect(response.statusCode).to.equal(404);
+          done();
+        });
+      });
+    });
+  
+    describe('GET /cart/hello', () => {
+      it('Responds with error 404', (done) => {
         const options = {
           url: 'http://localhost:7865/cart/hello',
           method: 'GET',

@@ -12,7 +12,7 @@ app.get('/', (request, response) => {
 });
 
 app.get('/cart/:id([0-9]+)', (request, responde) => {
-    responde.end(`Payment methods for cart ${req.params.id}`);
+    responde.end(`Payment methods for cart ${request.params.id}`);
 });
 
 app.listen(port, () => {
