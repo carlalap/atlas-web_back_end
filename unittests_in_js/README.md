@@ -445,3 +445,390 @@ bob@dylan:~$
 <li>You should use a <code>beforeEach</code> and a <code>afterEach</code> hooks to complete this exercise</li>
 </ul>
 </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      6. Async tests with done
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+<!-- Progress vs Score -->
+
+<!-- Task Body -->
+<p>Look into how to support async testing, for example when waiting for the answer of an API or from a Promise</p>
+
+<p><strong>Create a new file <code>6-payment_token.js</code>:</strong></p>
+
+<ul>
+<li>Create a new function named <code>getPaymentTokenFromAPI</code></li>
+<li>The function will take an argument called <code>success</code> (boolean)</li>
+<li>When <code>success</code> is true, it should return a resolved promise with the object <code>{data: &#39;Successful response from the API&#39; }</code></li>
+<li>Otherwise, the function is doing nothing.</li>
+</ul>
+
+<p><strong>Create a new file <code>6-payment_token.test.js</code> and write a test suite named <code>getPaymentTokenFromAPI</code></strong></p>
+
+<ul>
+<li>How to test the result of <code>getPaymentTokenFromAPI(true)</code>?</li>
+</ul>
+
+<p><strong>Tips:</strong></p>
+
+<ul>
+<li>You should be extremely careful when working with async testing. Without calling <code>done</code> properly, your test could be always passing even if what you are actually testing is never executed</li>
+</ul>
+
+<p><strong>Requirements:</strong></p>
+
+<ul>
+<li>You should be able to run the test suite using <code>npm test 6-payment_token.test.js</code></li>
+<li>Every test should pass without any warning</li>
+<li>You should use the <code>done</code> callback to execute this test</li>
+</ul>
+  </div>
+
+ <div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      7. Skip
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+  <!-- Progress vs Score -->
+
+  <!-- Task Body -->
+  <p>When you have a long list of tests, and you can&rsquo;t figure out why a test is breaking, avoid commenting out a test, or removing it. <strong>Skip</strong> it instead, and file a ticket to come back to it as soon as possible</p>
+
+<p>You will be using this file, conveniently named <code>7-skip.test.js</code></p>
+
+<pre><code>const { expect } = require(&#39;chai&#39;);
+
+describe(&#39;Testing numbers&#39;, () =&gt; {
+  it(&#39;1 is equal to 1&#39;, () =&gt; {
+    expect(1 === 1).to.be.true;
+  });
+
+  it(&#39;2 is equal to 2&#39;, () =&gt; {
+    expect(2 === 2).to.be.true;
+  });
+
+  it(&#39;1 is equal to 3&#39;, () =&gt; {
+    expect(1 === 3).to.be.true;
+  });
+
+  it(&#39;3 is equal to 3&#39;, () =&gt; {
+    expect(3 === 3).to.be.true;
+  });
+
+  it(&#39;4 is equal to 4&#39;, () =&gt; {
+    expect(4 === 4).to.be.true;
+  });
+
+  it(&#39;5 is equal to 5&#39;, () =&gt; {
+    expect(5 === 5).to.be.true;
+  });
+
+  it(&#39;6 is equal to 6&#39;, () =&gt; {
+    expect(6 === 6).to.be.true;
+  });
+
+  it(&#39;7 is equal to 7&#39;, () =&gt; {
+    expect(7 === 7).to.be.true;
+  });
+});
+</code></pre>
+
+<p><strong>Using the file <code>7-skip.test.js</code>:</strong></p>
+
+<ul>
+<li>Make the test suite pass <strong>without</strong> fixing or removing the failing test</li>
+<li><code>it</code> description <strong>must stay</strong> the same</li>
+</ul>
+
+<p><strong>Tips:</strong></p>
+
+<ul>
+<li>Skipping is also very helpful when you only want to execute the test in a particular case (specific environment, or when an API is not behaving correctly)</li>
+</ul>
+
+<p><strong>Requirements:</strong></p>
+
+<ul>
+<li>You should be able to run the test suite using <code>npm test 7-skip.test.js</code></li>
+<li>Every test should pass without any warning</li>
+</ul>
+
+  </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      8. Basic Integration testing
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+  <!-- Progress vs Score -->
+
+  <!-- Task Body -->
+  <p>In a folder <code>8-api</code> located at the root of the project directory, copy this <code>package.json</code> over.</p>
+
+<pre><code>{
+  &quot;name&quot;: &quot;8-api&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;./node_modules/mocha/bin/mocha&quot;
+  },
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;,
+  &quot;dependencies&quot;: {
+    &quot;express&quot;: &quot;^4.17.1&quot;
+  },
+  &quot;devDependencies&quot;: {
+    &quot;chai&quot;: &quot;^4.2.0&quot;,
+    &quot;mocha&quot;: &quot;^6.2.2&quot;,
+    &quot;request&quot;: &quot;^2.88.0&quot;,
+    &quot;sinon&quot;: &quot;^7.5.0&quot;
+  }
+}
+</code></pre>
+
+<p><strong>Create a new file <code>api.js</code>:</strong></p>
+
+<ul>
+<li>By using <code>express</code>, create an instance of <code>express</code> called <code>app</code></li>
+<li>Listen to port 7865 and log <code>API available on localhost port 7865</code> to the browser console when the <code>express</code> server is started</li>
+<li>For the route <code>GET /</code>, return the message <code>Welcome to the payment system</code></li>
+</ul>
+
+<p><strong>Create a new file <code>api.test.js</code>:</strong></p>
+
+<ul>
+<li>Create one suite for the index page:
+
+<ul>
+<li>Correct status code?</li>
+<li>Correct result?</li>
+<li>Other?</li>
+</ul></li>
+</ul>
+
+<p><strong>Server</strong></p>
+
+<p>Terminal 1</p>
+
+<pre><code>bob@dylan:~/8-api$  node api.js
+API available on localhost port 7865
+</code></pre>
+
+<p>Terminal 2</p>
+
+<pre><code>bob@dylan:~/8-api$  curl http://localhost:7865 ; echo &quot;&quot;
+Welcome to the payment system
+bob@dylan:~/8-api$  
+bob@dylan:~/8-api$ npm test api.test.js
+
+&gt; 8-api@1.0.0 test /root/8-api
+&gt; ./node_modules/mocha/bin/mocha &quot;api.test.js&quot;
+
+
+
+  Index page
+    ✓ ...
+    ✓ ...
+    ...
+
+  23 passing (256ms)
+
+bob@dylan:~/8-api$
+</code></pre>
+
+<p><strong>Tips:</strong></p>
+
+<ul>
+<li>Since this is an integration test, you will need to have your node server running for the test to pass</li>
+<li>You can use the module <code>request</code></li>
+</ul>
+
+<p><strong>Requirements:</strong></p>
+
+<ul>
+<li>You should be able to run the test suite using <code>npm test api.test.js</code></li>
+<li>Every test should pass without any warnings</li>
+</ul>
+
+  </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      9. Regex integration testing
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+  <!-- Progress vs Score -->
+
+  <!-- Task Body -->
+  <p>In a folder <code>9-api</code>, reusing the previous project in <code>8-api</code> (<code>package.json</code>, <code>api.js</code> and <code>api.test.js</code>)</p>
+
+<p><strong>Modify the file <code>api.js</code>:</strong></p>
+
+<ul>
+<li>Add a new endpoint: <code>GET /cart/:id</code></li>
+<li><code>:id</code> must be only a number (validation must be in the route definition)</li>
+<li>When access, the endpoint should return <code>Payment methods for cart :id</code></li>
+</ul>
+
+<p><strong>Modify the file <code>api.test.js</code>:</strong></p>
+
+<ul>
+<li>Add a new test suite for the cart page:
+
+<ul>
+<li>Correct status code when <code>:id</code> is a number?</li>
+<li>Correct status code when <code>:id</code> is NOT a number (=&gt; 404)?</li>
+<li>etc.</li>
+</ul></li>
+</ul>
+
+<p><strong>Server</strong></p>
+
+<p>Terminal 1</p>
+
+<pre><code>bob@dylan:~$ node api.js
+API available on localhost port 7865
+</code></pre>
+
+<p>Terminal 2</p>
+
+<pre><code>bob@dylan:~$ curl http://localhost:7865/cart/12 ; echo &quot;&quot;
+Payment methods for cart 12
+bob@dylan:~$ 
+bob@dylan:~$ curl http://localhost:7865/cart/hello -v
+*   Trying 127.0.0.1...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 7865 (#0)
+&gt; GET /cart/hello HTTP/1.1
+&gt; Host: localhost:7865
+&gt; User-Agent: curl/7.58.0
+&gt; Accept: */*
+&gt; 
+&lt; HTTP/1.1 404 Not Found
+&lt; X-Powered-By: Express
+&lt; Content-Security-Policy: default-src &#39;none&#39;
+&lt; X-Content-Type-Options: nosniff
+&lt; Content-Type: text/html; charset=utf-8
+&lt; Content-Length: 149
+&lt; Date: Wed, 15 Jul 2020 08:33:44 GMT
+&lt; Connection: keep-alive
+&lt; 
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;Error&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;pre&gt;Cannot GET /cart/hello&lt;/pre&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+* Connection #0 to host localhost left intact
+bob@dylan:~$ 
+</code></pre>
+
+<p><strong>Tips:</strong></p>
+
+<ul>
+<li>You will need to add a small regex in your path to support the usecase</li>
+</ul>
+
+<p><strong>Requirements:</strong></p>
+
+<ul>
+<li>You should be able to run the test suite using <code>npm test api.test.js</code></li>
+<li>Every test should pass without any warning</li>
+</ul>
+  </div>
+
+<div class="panel-heading panel-heading-actions">
+    <h3 class="panel-title">
+      10. Deep equality &amp; Post integration testing
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <span id="user_id" data-id="6138"></span>
+
+  <!-- Progress vs Score -->
+
+  <!-- Task Body -->
+  <p>In a folder <code>10-api</code>, reusing the previous project in <code>9-api</code> (<code>package.json</code>, <code>api.js</code> and <code>api.test.js</code>)</p>
+
+<p><strong>Modify the file <code>api.js</code>:</strong></p>
+
+<ul>
+<li>Add an endpoint <code>GET /available_payments</code> that returns an object with the following structure:</li>
+</ul>
+
+<pre><code>{
+  payment_methods: {
+    credit_cards: true,
+    paypal: false
+  }
+}
+</code></pre>
+
+<ul>
+<li>Add an endpoint <code>POST /login</code> that returns the message <code>Welcome :username</code> where <code>:username</code> is the value of the body variable <code>userName</code>.</li>
+</ul>
+
+<p><strong>Modify the file <code>api.test.js</code>:</strong></p>
+
+<ul>
+<li>Add a test suite for the <code>/login</code> endpoint</li>
+<li>Add a test suite for the <code>/available_payments</code> endpoint</li>
+</ul>
+
+<p><strong>Server</strong></p>
+
+<p>Terminal 1</p>
+
+<pre><code>bob@dylan:~$ node api.js
+API available on localhost port 7865
+</code></pre>
+
+<p>Terminal 2</p>
+
+<pre><code>bob@dylan:~$ curl http://localhost:7865/available_payments ; echo &quot;&quot;
+{&quot;payment_methods&quot;:{&quot;credit_cards&quot;:true,&quot;paypal&quot;:false}}
+bob@dylan:~$ 
+bob@dylan:~$ curl -XPOST http://localhost:7865/login -d &#39;{ &quot;userName&quot;: &quot;Betty&quot; }&#39; -H &#39;Content-Type: application/json&#39; ; echo &quot;&quot;
+Welcome Betty
+bob@dylan:~$ 
+</code></pre>
+
+<p><strong>Tips:</strong></p>
+
+<ul>
+<li>Look at deep equality to compare objects</li>
+</ul>
+
+<p><strong>Requirements:</strong></p>
+
+<ul>
+<li>You should be able to run the test suite using <code>npm test api.test.js</code></li>
+<li>Every test should pass without any warning</li>
+<li>Your server should not display any error</li>
+</ul>
+
+  </div>

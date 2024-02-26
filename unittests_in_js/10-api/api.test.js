@@ -1,4 +1,4 @@
-/* 8. Basic Integration testing
+/* task10. Deep equality & Post integration testing
 * suite test for the index page
 */
 const request = require('request');
